@@ -1,0 +1,747 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="bg-gray-100 min-h-screen py-6">
+    <div class="max-w-7xl mx-auto px-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Quản lý đơn hàng</h1>
+            <div class="flex space-x-2">
+                <a href="/books"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
+                    Quản lý sách
+                </a>
+                <button id="btn-refresh"
+                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Làm mới
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <h2 class="text-lg font-semibold mb-4">Lọc đơn hàng</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="filter-status" class="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
+                    <select id="filter-status"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="Chờ xử lý">Chờ xử lý</option>
+                        <option value="Đang xử lý">Đang xử lý</option>
+                        <option value="Đã giao hàng">Đã giao hàng</option>
+                        <option value="Đã hủy">Đã hủy</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-date-from" class="block text-sm font-medium text-gray-700 mb-1">Từ ngày</label>
+                    <input type="date" id="filter-date-from"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="filter-date-to" class="block text-sm font-medium text-gray-700 mb-1">Đến ngày</label>
+                    <input type="date" id="filter-date-to"
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div class="flex items-end">
+                    <button id="btn-apply-filter"
+                        class="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
+                        Áp dụng bộ lọc
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Mã đơn hàng
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Khách hàng
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Ngày đặt
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Tổng tiền
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Trạng thái
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Thao tác
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Orders will be loaded here dynamically -->
+                        <tr class="animate-pulse">
+                            <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                Đang tải dữ liệu...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination" class="px-6 py-4 flex items-center justify-between border-t border-gray-200">
+                <div class="text-sm text-gray-700">
+                    Hiển thị <span id="from-count">0</span>-<span id="to-count">0</span> trong <span
+                        id="total-count">0</span> đơn hàng
+                </div>
+                <div class="flex space-x-2">
+                    <button id="btn-prev-page"
+                        class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        Trước
+                    </button>
+                    <button id="btn-next-page"
+                        class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        Sau
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div id="order-detail-modal" class="fixed inset-0 z-50 overflow-y-auto hidden" aria-labelledby="modal-title"
+    role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+        <!-- Center modal -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        <div
+            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+            <!-- Modal header -->
+            <div class="bg-gray-100 px-6 py-4 flex justify-between items-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    Chi tiết đơn hàng <span id="modal-order-id" class="font-bold"></span>
+                </h3>
+                <button type="button" class="btn-close-modal text-gray-400 hover:text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="px-6 py-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Customer Information -->
+                    <div class="border rounded-md p-4">
+                        <h4 class="font-medium text-gray-900 mb-2">Thông tin khách hàng</h4>
+                        <div class="text-sm text-gray-700 space-y-1">
+                            <p><span class="font-medium">Họ tên:</span> <span id="modal-customer-name"></span></p>
+                            <p><span class="font-medium">Email:</span> <span id="modal-customer-email"></span></p>
+                            <p><span class="font-medium">Số điện thoại:</span> <span id="modal-customer-phone"></span>
+                            </p>
+                            <p><span class="font-medium">Địa chỉ:</span> <span id="modal-customer-address"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Order Information -->
+                    <div class="border rounded-md p-4">
+                        <h4 class="font-medium text-gray-900 mb-2">Thông tin đơn hàng</h4>
+                        <div class="text-sm text-gray-700 space-y-1">
+                            <p><span class="font-medium">Ngày đặt:</span> <span id="modal-order-date"></span></p>
+                            <p><span class="font-medium">Tổng tiền:</span> <span id="modal-order-total"></span></p>
+                            <p class="flex items-center">
+                                <span class="font-medium mr-2">Trạng thái:</span>
+                                <span id="modal-order-status" class="px-2 py-1 text-xs rounded-full"></span>
+                            </p>
+                            <p><span class="font-medium">Ghi chú:</span> <span id="modal-order-note"
+                                    class="italic"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="border rounded-md p-4">
+                    <h4 class="font-medium text-gray-900 mb-2">Sản phẩm đặt hàng</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Sách
+                                    </th>
+                                    <th scope="col"
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Giá
+                                    </th>
+                                    <th scope="col"
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Số lượng
+                                    </th>
+                                    <th scope="col"
+                                        class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tổng
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-order-items" class="bg-white divide-y divide-gray-200">
+                                <!-- Order items will be added here dynamically -->
+                            </tbody>
+                            <tfoot class="bg-gray-50">
+                                <tr>
+                                    <td colspan="3" class="px-4 py-3 text-right text-sm font-medium text-gray-900">
+                                        Tổng cộng:
+                                    </td>
+                                    <td class="px-4 py-3 text-right text-sm font-medium text-gray-900"
+                                        id="modal-order-items-total">
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="bg-gray-100 px-6 py-4 flex justify-end space-x-2">
+                <button type="button"
+                    class="btn-close-modal px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Đóng
+                </button>
+                <button type="button" id="btn-update-processing"
+                    class="btn-action px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 hidden">
+                    Đang xử lý
+                </button>
+                <button type="button" id="btn-update-delivered"
+                    class="btn-action px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 hidden">
+                    Đã giao hàng
+                </button>
+                <button type="button" id="btn-update-cancelled"
+                    class="btn-action px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 hidden">
+                    Hủy đơn hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    /* Status badges */
+    .status-badge {
+        @apply px-2 py-1 text-xs rounded-full;
+    }
+
+    .status-badge-waiting {
+        @apply bg-blue-100 text-blue-800;
+    }
+
+    .status-badge-processing {
+        @apply bg-yellow-100 text-yellow-800;
+    }
+
+    .status-badge-delivered {
+        @apply bg-green-100 text-green-800;
+    }
+
+    .status-badge-cancelled {
+        @apply bg-red-100 text-red-800;
+    }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    frappe.ready(function () {
+        // Variables
+        let currentPage = 1;
+        let pageSize = 10;
+        let totalOrders = 0;
+        let currentOrderId = null;
+        let filters = {
+            status: '',
+            start_date: '',
+            end_date: ''
+        };
+
+        // Initial load
+        loadOrders();
+
+        // Event handlers
+        document.getElementById('btn-refresh').addEventListener('click', function () {
+            loadOrders();
+        });
+
+        document.getElementById('btn-apply-filter').addEventListener('click', function () {
+            applyFilters();
+        });
+
+        document.getElementById('btn-prev-page').addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                loadOrders();
+            }
+        });
+
+        document.getElementById('btn-next-page').addEventListener('click', function () {
+            if (currentPage * pageSize < totalOrders) {
+                currentPage++;
+                loadOrders();
+            }
+        });
+
+        // Close modal buttons
+        document.querySelectorAll('.btn-close-modal').forEach(button => {
+            button.addEventListener('click', function () {
+                closeOrderDetailModal();
+            });
+        });
+
+        // Status update buttons
+        document.getElementById('btn-update-processing').addEventListener('click', function () {
+            updateOrderStatus(currentOrderId, 'Đang xử lý');
+        });
+
+        document.getElementById('btn-update-delivered').addEventListener('click', function () {
+            updateOrderStatus(currentOrderId, 'Đã giao hàng');
+        });
+
+        document.getElementById('btn-update-cancelled').addEventListener('click', function () {
+            updateOrderStatus(currentOrderId, 'Đã hủy');
+        });
+
+        // Functions
+        function applyFilters() {
+            filters.status = document.getElementById('filter-status').value;
+            filters.start_date = document.getElementById('filter-date-from').value;
+            filters.end_date = document.getElementById('filter-date-to').value;
+
+            currentPage = 1;
+            loadOrders();
+        }
+
+        function loadOrders() {
+            const tableBody = document.getElementById('orders-table-body');
+            tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">Đang tải dữ liệu...</td></tr>';
+
+            // Prepare filters for API call
+            const apiFilters = {};
+            if (filters.status) {
+                apiFilters.status = filters.status;
+            }
+            if (filters.start_date) {
+                apiFilters.order_date = ['>=', filters.start_date];
+            }
+            if (filters.end_date) {
+                if (apiFilters.order_date) {
+                    apiFilters.order_date = [
+                        'between',
+                        [filters.start_date, filters.end_date]
+                    ];
+                } else {
+                    apiFilters.order_date = ['<=', filters.end_date];
+                }
+            }
+
+            frappe.call({
+                method: 'frappe.client.get_list',
+                args: {
+                    doctype: 'Order',
+                    fields: ['name', 'fullname', 'order_date', 'total_money', 'status'],
+                    filters: apiFilters,
+                    limit_start: (currentPage - 1) * pageSize,
+                    limit_page_length: pageSize,
+                    order_by: 'order_date desc'
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        renderOrdersTable(response.message);
+
+                        // Get total count for pagination
+                        frappe.call({
+                            method: 'frappe.client.get_count',
+                            args: {
+                                doctype: 'Order',
+                                filters: apiFilters
+                            },
+                            callback: function (countResponse) {
+                                if (countResponse.message !== undefined) {
+                                    totalOrders = countResponse.message;
+                                    updatePagination();
+                                }
+                            }
+                        });
+                    } else {
+                        tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">Không tìm thấy đơn hàng nào</td></tr>';
+                        updatePagination();
+                    }
+                },
+                error: function (err) {
+                    console.error('Error loading orders:', err);
+                    tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-red-500">Đã xảy ra lỗi khi tải dữ liệu</td></tr>';
+                }
+            });
+        }
+
+        function renderOrdersTable(orders) {
+            const tableBody = document.getElementById('orders-table-body');
+            tableBody.innerHTML = '';
+
+            if (orders.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">Không tìm thấy đơn hàng nào</td></tr>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition-colors';
+
+                // Format date
+                const orderDate = new Date(order.order_date);
+                const formattedDate = orderDate.toLocaleString('vi-VN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Format status badge
+                let statusBadgeClass = '';
+                switch (order.status) {
+                    case 'Chờ xử lý':
+                        statusBadgeClass = 'status-badge-waiting';
+                        break;
+                    case 'Đang xử lý':
+                        statusBadgeClass = 'status-badge-processing';
+                        break;
+                    case 'Đã giao hàng':
+                        statusBadgeClass = 'status-badge-delivered';
+                        break;
+                    case 'Đã hủy':
+                        statusBadgeClass = 'status-badge-cancelled';
+                        break;
+                }
+
+                // Format currency
+                const formattedTotal = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(order.total_money);
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        ${order.name}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        ${order.fullname || 'N/A'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        ${formattedDate}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                        ${formattedTotal}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${statusBadgeClass}">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button class="btn-view-order text-blue-600 hover:text-blue-900" data-order-id="${order.name}">
+                            Xem chi tiết
+                        </button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+
+            // Add event listeners to view buttons
+            document.querySelectorAll('.btn-view-order').forEach(button => {
+                button.addEventListener('click', function () {
+                    const orderId = this.getAttribute('data-order-id');
+                    openOrderDetailModal(orderId);
+                });
+            });
+        }
+
+        function updatePagination() {
+            const fromCount = totalOrders === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+            const toCount = Math.min(currentPage * pageSize, totalOrders);
+
+            document.getElementById('from-count').textContent = fromCount;
+            document.getElementById('to-count').textContent = toCount;
+            document.getElementById('total-count').textContent = totalOrders;
+
+            // Update buttons state
+            document.getElementById('btn-prev-page').disabled = currentPage <= 1;
+            document.getElementById('btn-next-page').disabled = currentPage * pageSize >= totalOrders;
+        }
+
+        function openOrderDetailModal(orderId) {
+            currentOrderId = orderId;
+
+            // Show loading state
+            document.getElementById('modal-order-items').innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center text-gray-500">Đang tải dữ liệu...</td></tr>';
+            document.getElementById('order-detail-modal').classList.remove('hidden');
+
+            // Fetch order details
+            frappe.call({
+                method: 'frappe.client.get',
+                args: {
+                    doctype: 'Order',
+                    name: orderId
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        const order = response.message;
+
+                        // Update modal title
+                        document.getElementById('modal-order-id').textContent = order.name;
+
+                        // Update customer info
+                        document.getElementById('modal-customer-name').textContent = order.fullname || 'N/A';
+                        document.getElementById('modal-customer-email').textContent = order.email || 'N/A';
+                        document.getElementById('modal-customer-phone').textContent = order.phone_number || 'N/A';
+                        document.getElementById('modal-customer-address').textContent = order.address || 'N/A';
+
+                        // Update order info
+                        const orderDate = new Date(order.order_date);
+                        document.getElementById('modal-order-date').textContent = orderDate.toLocaleString('vi-VN');
+                        document.getElementById('modal-order-total').textContent = new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(order.total_money);
+
+                        // Update status with badge
+                        const statusElement = document.getElementById('modal-order-status');
+                        statusElement.textContent = order.status;
+
+                        // Reset and apply appropriate status class
+                        statusElement.className = 'status-badge';
+                        switch (order.status) {
+                            case 'Chờ xử lý':
+                                statusElement.classList.add('status-badge-waiting');
+                                break;
+                            case 'Đang xử lý':
+                                statusElement.classList.add('status-badge-processing');
+                                break;
+                            case 'Đã giao hàng':
+                                statusElement.classList.add('status-badge-delivered');
+                                break;
+                            case 'Đã hủy':
+                                statusElement.classList.add('status-badge-cancelled');
+                                break;
+                        }
+
+                        document.getElementById('modal-order-note').textContent = order.note || 'Không có ghi chú';
+
+                        // Render order items
+                        renderOrderItems(order.order_items);
+
+                        // Update action buttons based on current status
+                        updateActionButtons(order.status, order.docstatus);
+                    } else {
+                        closeOrderDetailModal();
+                        frappe.throw(__('Không tìm thấy thông tin đơn hàng'));
+                    }
+                },
+                error: function (err) {
+                    console.error('Error fetching order details:', err);
+                    closeOrderDetailModal();
+                    frappe.throw(__('Đã xảy ra lỗi khi tải thông tin đơn hàng'));
+                }
+            });
+        }
+
+        function renderOrderItems(items) {
+            const itemsContainer = document.getElementById('modal-order-items');
+            itemsContainer.innerHTML = '';
+
+            if (!items || items.length === 0) {
+                itemsContainer.innerHTML = '<tr><td colspan="4" class="px-4 py-3 text-center text-gray-500">Không có sản phẩm nào</td></tr>';
+                document.getElementById('modal-order-items-total').textContent = '0 VND';
+                return;
+            }
+
+            let total = 0;
+
+            // First, fetch all book names for product_ids
+            const productIds = items.map(item => item.product_id);
+
+            frappe.call({
+                method: 'frappe.client.get_list',
+                args: {
+                    doctype: 'Book',
+                    fields: ['name', 'book_name'],
+                    filters: [['name', 'in', productIds]]
+                },
+                callback: function (response) {
+                    const books = response.message || [];
+                    const bookMap = {};
+
+                    // Create a map of book id to book name
+                    books.forEach(book => {
+                        bookMap[book.name] = book.book_name;
+                    });
+
+                    // Now render the items with book names
+                    items.forEach(item => {
+                        const row = document.createElement('tr');
+
+                        const subtotal = item.price * item.num;
+                        total += subtotal;
+
+                        row.innerHTML = `
+                            <td class="px-4 py-3 text-sm text-gray-900">
+                                ${bookMap[item.product_id] || item.product_id}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-900 text-right">
+                                ${new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(item.price)}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-900 text-right">
+                                ${item.num}
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-900 text-right">
+                                ${new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(subtotal)}
+                            </td>
+                        `;
+
+                        itemsContainer.appendChild(row);
+                    });
+
+                    // Update the total
+                    document.getElementById('modal-order-items-total').textContent = new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(total);
+                }
+            });
+        }
+
+        function updateActionButtons(status, docstatus) {
+            // Reset all buttons to hidden
+            document.querySelectorAll('.btn-action').forEach(button => {
+                button.classList.add('hidden');
+            });
+
+            // Show appropriate buttons based on current status
+            if (docstatus === 1) { // Submitted
+                if (status === 'Chờ xử lý') {
+                    document.getElementById('btn-update-processing').classList.remove('hidden');
+                    document.getElementById('btn-update-cancelled').classList.remove('hidden');
+                } else if (status === 'Đang xử lý') {
+                    document.getElementById('btn-update-delivered').classList.remove('hidden');
+                    document.getElementById('btn-update-cancelled').classList.remove('hidden');
+                }
+                // No actions for 'Đã giao hàng' or 'Đã hủy'
+            }
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            frappe.call({
+                method: 'frappe.client.set_value',
+                args: {
+                    doctype: 'Order',
+                    name: orderId,
+                    fieldname: 'status',
+                    value: newStatus
+                },
+                callback: function (response) {
+                    if (response.message) {
+                        frappe.show_alert({
+                            message: `Đã cập nhật trạng thái đơn hàng thành "${newStatus}"`,
+                            indicator: 'green'
+                        });
+
+                        // Close modal and refresh orders list
+                        closeOrderDetailModal();
+                        loadOrders();
+                    } else {
+                        frappe.show_alert({
+                            message: 'Không thể cập nhật trạng thái đơn hàng',
+                            indicator: 'red'
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.error('Error updating order status:', err);
+                    frappe.show_alert({
+                        message: 'Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng',
+                        indicator: 'red'
+                    });
+                }
+            });
+        }
+
+        function closeOrderDetailModal() {
+            document.getElementById('order-detail-modal').classList.add('hidden');
+            currentOrderId = null;
+        }
+    });
+</script>
+{% endblock %}
+
+{% block head_include %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+    /* Utility classes for Tailwind's JIT mode */
+    .bg-blue-100 {
+        background-color: #dbeafe;
+    }
+
+    .bg-yellow-100 {
+        background-color: #fef3c7;
+    }
+
+    .bg-green-100 {
+        background-color: #d1fae5;
+    }
+
+    .bg-red-100 {
+        background-color: #fee2e2;
+    }
+
+    .text-blue-800 {
+        color: #1e40af;
+    }
+
+    .text-yellow-800 {
+        color: #92400e;
+    }
+
+    .text-green-800 {
+        color: #065f46;
+    }
+
+    .text-red-800 {
+        color: #991b1b;
+    }
+</style>
+{% endblock %}
