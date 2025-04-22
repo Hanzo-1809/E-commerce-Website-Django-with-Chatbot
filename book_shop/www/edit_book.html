@@ -1,0 +1,306 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="bg-gray-100 min-h-screen py-6">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="px-6 py-4 bg-red-600 text-white flex justify-between items-center">
+            <h1 class="text-xl font-bold">Edit Book</h1>
+            <a href="/books" class="bg-white text-red-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
+                Back to Books
+            </a>
+        </div>
+
+        <div class="p-6">
+            <form id="book-edit-form" class="space-y-6">
+                <input type="hidden" id="book_id" name="book_id" value="">
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label for="id" class="block text-sm font-medium text-gray-700">ID/SKU</label>
+                        <input type="text" id="id" name="id" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    </div>
+                    <div>
+                        <label for="book_name" class="block text-sm font-medium text-gray-700">Book Name</label>
+                        <input type="text" id="book_name" name="book_name" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
+                        <select id="category_id" name="category_id"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                            <!-- Options will be loaded dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                        <input type="number" id="price" name="price" min="0" step="0.01"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    </div>
+                    <div>
+                        <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" min="0" step="1"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                    </div>
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select id="status" name="status"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                            <option value="Draft">Draft</option>
+                            <option value="Published">Published</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label for="thumbnail" class="block text-sm font-medium text-gray-700">Image</label>
+                        <div class="mt-1 flex items-center">
+                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
+                        </div>
+                        <div id="current-image"
+                            class="mt-2 h-24 w-24 bg-gray-100 rounded flex items-center justify-center">
+                            <span class="text-xs text-gray-500">No image</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <div id="description-editor" class="mt-1 h-36 border rounded-md"></div>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <a href="/books"
+                        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Cancel
+                    </a>
+                    <button type="submit" id="btn-update-book"
+                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Update Book
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block style %}
+<style>
+    /* Form styles */
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 1px #dc2626;
+    }
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    frappe.ready(function () {
+        // Get book ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('book_id');
+
+        if (!bookId) {
+            // Redirect to books page if no book ID provided
+            window.location.href = '/books';
+            return;
+        }
+
+        // Set book ID in hidden field
+        document.getElementById('book_id').value = bookId;
+
+        // Initialize Quill editor if available
+        let descriptionEditor;
+        if (typeof Quill !== 'undefined') {
+            descriptionEditor = new Quill('#description-editor', {
+                theme: 'snow',
+                placeholder: 'Enter book description...',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['link'],
+                        ['clean']
+                    ]
+                }
+            });
+        }
+
+        // Load book data
+        function loadBookData() {
+            frappe.call({
+                method: 'frappe.client.get',
+                args: {
+                    doctype: 'Book',
+                    name: bookId
+                },
+                callback: function (r) {
+                    if (r.message) {
+                        const book = r.message;
+
+                        // Fill form fields
+                        document.getElementById('id').value = book.id || '';
+                        document.getElementById('book_name').value = book.book_name || '';
+                        document.getElementById('price').value = book.price || '';
+                        document.getElementById('quantity').value = book.quantity || '';
+                        document.getElementById('status').value = book.status || 'Draft';
+
+                        if (book.category_id) {
+                            document.getElementById('category_id').value = book.category_id;
+                        }
+
+                        if (descriptionEditor) {
+                            descriptionEditor.root.innerHTML = book.description || '';
+                        }
+
+                        // Display current image if exists
+                        if (book.thumbnail) {
+                            const imgContainer = document.getElementById('current-image');
+                            imgContainer.innerHTML = `<img src="${book.thumbnail}" alt="${book.book_name}" class="h-24 w-24 object-cover rounded">`;
+                        }
+                    } else {
+                        frappe.throw(__('Book not found'));
+                    }
+                }
+            });
+        }
+
+        // Load categories
+        function loadCategories() {
+            frappe.call({
+                method: 'frappe.client.get_list',
+                args: {
+                    doctype: 'Category',
+                    fields: ['name', 'category_name'],
+                    limit_page_length: 500
+                },
+                callback: function (r) {
+                    if (r.message) {
+                        const categorySelect = document.getElementById('category_id');
+                        categorySelect.innerHTML = '<option value="">Select Category</option>';
+
+                        r.message.forEach(function (category) {
+                            const option = document.createElement('option');
+                            option.value = category.name;
+                            option.textContent = category.category_name || category.name;
+                            categorySelect.appendChild(option);
+                        });
+
+                        // After loading categories, load book data to ensure category selection works
+                        loadBookData();
+                    }
+                }
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('book-edit-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const bookData = {
+                doctype: 'Book',
+                name: bookId,
+                id: document.getElementById('id').value,
+                book_name: document.getElementById('book_name').value,
+                price: parseFloat(document.getElementById('price').value || 0),
+                quantity: parseInt(document.getElementById('quantity').value || 0),
+                status: document.getElementById('status').value
+            };
+
+            if (document.getElementById('category_id').value) {
+                bookData.category_id = document.getElementById('category_id').value;
+            }
+
+            if (descriptionEditor) {
+                bookData.description = descriptionEditor.root.innerHTML;
+            }
+
+            // Xử lý tải lên hình ảnh thumbnail nếu người dùng đã chọn file mới
+            const thumbnailInput = document.getElementById('thumbnail');
+            if (thumbnailInput.files && thumbnailInput.files.length > 0) {
+                // Hiển thị thông báo đang tải
+                frappe.show_alert({
+                    message: 'Uploading image...',
+                    indicator: 'blue'
+                });
+
+                // Use FileReader to convert the image to base64
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // Add the base64 image data to bookData
+                    bookData.thumbnail = e.target.result;
+
+                    // Update book with the base64 data
+                    updateBookData(bookData);
+                };
+                reader.onerror = function (e) {
+                    frappe.show_alert({
+                        message: 'Error reading image file',
+                        indicator: 'red'
+                    });
+
+                    // Still update the book without thumbnail
+                    updateBookData(bookData);
+                };
+                // Start reading the file as a data URL (base64)
+                reader.readAsDataURL(thumbnailInput.files[0]);
+            } else {
+                // No new file selected, just update the book data
+                updateBookData(bookData);
+            }
+        });
+
+        // Hàm cập nhật dữ liệu sách
+        function updateBookData(bookData) {
+            // Log the data being sent for debugging
+            console.log("Sending book data:", bookData);
+
+            frappe.call({
+                method: 'book_shop.book_shop.doctype.book.book.save_book',
+                args: {
+                    book_data: JSON.stringify(bookData)
+                },
+                callback: function (r) {
+                    if (r.message && r.message.success) {
+                        frappe.show_alert({
+                            message: 'Book updated successfully',
+                            indicator: 'green'
+                        });
+
+                        // Redirect to books page after short delay
+                        setTimeout(function () {
+                            window.location.href = '/books';
+                        }, 1500);
+                    } else {
+                        frappe.show_alert({
+                            message: 'Error updating book: ' + (r.message?.message || 'Unknown error'),
+                            indicator: 'red'
+                        });
+                        console.error('Update error:', r);
+                    }
+                }
+            });
+        }
+
+        // Initialize page
+        loadCategories();
+    });
+</script>
+{% endblock %}
+
+{% block head_include %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+{% endblock %}
