@@ -1,0 +1,277 @@
+{% load static %}
+{% include 'app/navbar.html' %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'app/css/ShoppingCart.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/ordercomponent.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/navbar.css' %}">
+
+    <script src="{% static 'app/js/ordercomponent.js' %}"></script>
+    <script src="{% static 'app/js/ShoppingCart.js' %}"></script>
+    <script src="{% static 'app/js/cart.js' %}"></script>
+
+    
+</head>
+<body>
+<main>
+    <div class="title">YOUR CART</div>
+    <div class="hero">
+        <div class="list-items">
+            <div class="heading item" style="color: var(--color1);">
+                <div class="tmp">
+                    <input type="checkbox" id="selectAll" onchange="selectAllItems(this)">
+                </div>
+                <div class="book-cart-details">BOOK DETAILS</div>
+                <div class="book-price">PRICE</div>
+                <div class="book-amount">AMOUNT</div>
+                <div class="total">TOTAL</div>
+                <button class="tmp1">
+                    <i class="ri-delete-bin-line"></i>
+                </button>
+            </div>
+
+            {% for item in items %}
+            <div class="item">
+                <div class="tmp">
+                    <input type="checkbox" name="selectedBooks" value="" onchange="calculateSummary()">
+                </div>
+                <div class="book-cart-details">
+                    <div class="book-img">
+                        <img src="{{item.product.ImageURL}}" alt="">
+                    </div>
+                    <div class="details">
+                        <div class="book-name">{{item.product.name}}</div>
+                        <div class="book-author"></div>
+                    </div>
+                </div>
+                <div class="book-price">{{item.product.price}} VND</div>
+                <div class="book-amount">
+                    <div class="amount-details">
+                        <button class="update-cart" data-product={{item.product.id}} data-action="remove">-</button>
+                        <div class="amount">{{ item.quantity }}</div>
+                        <button class="update-cart" data-product={{item.product.id}} data-action="add">+</button>
+                    </div>
+                </div>
+                <div class="total">{{ item.total_price }} VND</div>
+                <button class="tmp1">
+                    <i class="ri-delete-bin-line"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="details">
+            <div class="details-title">ORDER SUMMARY</div>
+            <div class="list-item">
+                <div class="total-item">
+                    <div class="heading">
+                        <div class="Total">Total Items:</div>
+                        <div class="Total-num" id="totalItems">{{ cart_total_items }}</div>
+                    </div>
+                    <div id="summaryItems"></div>
+                </div>
+                <div class="total-cost">
+                    <div class="tag">Total Cost:</div>
+                    <div class="cost" id="totalCost">{{ cart_total_price }} VND</div>
+                </div>
+                <div class="buy-btn">
+                    <button onclick="showOrderPopup()">CHECK OUT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Popup đặt hàng -->
+<div class="popup">
+    <form class="order-form" action="" method="post">
+        {% csrf_token %}
+        <div class="heading">ORDER</div>
+        <div class="Information">
+            <div class="subheading">
+                <div>Information</div>
+                <div><i class="ri-edit-fill"></i></div>
+            </div>
+
+            <input type="hidden" name="id" value="{{ user.id }}">
+            <input type="hidden" name="email" value="{{ user.email }}">
+
+            <div class="user-info">
+                <div class="input-box user-name">
+                    <label for="user-name">Receiver's Name:</label>
+                    <input type="text" name="name" value="{{ user.name }}" required>
+                </div>
+                <div class="input-box user-phone">
+                    <label for="user-phone">Phone:</label>
+                    <input type="number" name="phno" value="{{ user.phone }}" required>
+                </div>
+                <div class="input-box address">
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" value="{{ user.address }}">
+                </div>
+                <div class="input-box ward">
+                    <label for="ward">Ward:</label>
+                    <input type="text" name="landmark" value="{{ user.landmark }}">
+                </div>
+                <div class="input-box district">
+                    <label for="district">District:</label>
+                    <input type="text" name="city" value="{{ user.city }}">
+                </div>
+                <div class="input-box city">
+                    <label for="city">City:</label>
+                    <input type="text" name="state" value="{{ user.state }}">
+                </div>
+                <div class="input-box pin">
+                    <label for="pin">Pin:</label>
+                    <input type="number" name="pincode" value="{{ user.pincode }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="subheading">Your orders:</div>
+        <div class="list-items">
+            {% for book in cart_items %}
+            <div class="item">
+                <div class="image"><img src="{{ book.image.url }}" alt=""></div>
+                <div class="details">
+                    <div class="name">{{ book.name }}</div>
+                    <div class="amount">{{ book.quantity }}</div>
+                </div>
+                <div class="cost">{{ book.price }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="payments">
+            <div class="paymentmethod">
+                <label for="paymentmethod">Payment Methods:</label>
+                <select name="payment">
+                    <option value="" selected disabled>-- Select --</option>
+                    <option value="COD">Cash On Delivery</option>
+                    <option value="credit_card" disabled>Credit Card (not support)</option>
+                    <option value="paypal" disabled>Paypal (not support)</option>
+                </select>
+            </div>
+            <div class="total">
+                <div class="subheading">Total:</div>
+                <div id="orderTotal">{{ cart_total_price }} VND</div>
+            </div>
+        </div>
+
+        <input type="hidden" name="totalprice" value="{{ cart_total_price }}">
+        <div class="submit">
+            <button id="cancel" type="button">Cancel</button>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+function updateQuantity(cartId, action) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText.trim() === "success") {
+                location.reload(true); // Tải lại trang để cập nhật số lượng và tổng giá
+            } else {
+                alert("Failed to update quantity.");
+            }
+        }
+    };
+    xhttp.open("POST", "updateQuantityServlet", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("cartId=" + cartId + "&action=" + action);
+}
+
+function selectAllItems(source) {
+    checkboxes = document.getElementsByName('selectedBooks');
+    for(var i in checkboxes) {
+        checkboxes[i].checked = source.checked;
+    }
+    calculateSummary();
+}
+
+function calculateSummary() {
+    var selectedBooks = document.getElementsByName('selectedBooks');
+    var totalItems = 0;
+    var totalCost = 0;
+    var summaryItems = "";
+
+    selectedBooks.forEach(function(book) {
+        if (book.checked) {
+            totalItems += 1;
+            var item = document.querySelector('input[value="'+book.value+'"]').closest('.item');
+            var quantity = parseInt(item.querySelector('.amount').innerText);
+            var price = parseFloat(item.querySelector('.total').innerText);
+            var bookName = item.querySelector('.book-name').innerText;
+
+            totalCost += price;
+            summaryItems += `<div class="item">
+                                <div class="book-name">${bookName}</div>
+                                <div class="book-amount">${quantity}</div>
+                             </div>`;
+        }
+    });
+
+    document.getElementById('totalItems').innerText = totalItems;
+    document.getElementById('totalCost').innerText = totalCost + "vnd";
+    document.getElementById('summaryItems').innerHTML = summaryItems;
+    document.getElementById('totalpriceInput').value = totalCost; // Update the hidden input value
+}
+    function showOrderPopup() {
+        var selectedBooks = document.getElementsByName('selectedBooks');
+        var totalItems = 0;
+        var totalCost = 0;
+        var selectedItemsContainer = document.getElementById('selectedItemsContainer');
+        selectedItemsContainer.innerHTML = ''; // Clear previous selections
+
+        selectedBooks.forEach(function(book) {
+            if (book.checked) {
+                var item = document.querySelector('input[value="'+book.value+'"]').closest('.item');
+                var price = parseFloat(item.querySelector('.total').innerText);
+                var quantity = parseInt(item.querySelector('.amount').innerText);
+                var bookId = book.value;
+
+                totalCost += price;
+                totalItems += 1;
+
+                // Add hidden input fields for each selected item
+                var inputBookId = document.createElement('input');
+                inputBookId.type = 'hidden';
+                inputBookId.name = 'selectedBooks';
+                inputBookId.value = bookId;
+                selectedItemsContainer.appendChild(inputBookId);
+
+                var inputQuantity = document.createElement('input');
+                inputQuantity.type = 'hidden';
+                inputQuantity.name = 'quantities';
+                inputQuantity.value = quantity;
+                selectedItemsContainer.appendChild(inputQuantity);
+            }
+        });
+
+        if (totalItems > 0) {
+            document.getElementById('orderTotal').innerText = totalCost + "vnd";
+            document.getElementById('totalpriceInput').value = totalCost; // Update the hidden input value
+            document.querySelector('.popup').style.display = 'block';
+        } else {
+            alert("Please select at least one item to proceed with checkout.");
+        }
+    }
+
+    document.getElementById('cancel').onclick = function() {
+        document.querySelector('.popup').style.display = 'none';
+    };
+
+    window.onload = calculateSummary;
+</script>
+
+</body>
+
+</html>

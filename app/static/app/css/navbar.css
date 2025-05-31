@@ -1,0 +1,1059 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: 'Giants';
+    src: url("./resource/font/Giants.ttf") format("truetype");
+}
+
+:root {
+    --nomal-font: "poppins";
+    --title-font: "Montserrat";
+
+    --color1: #c1121f;
+    --color2: #780000;
+    --color3: #fdf0d5;
+    --color4: #003049;
+    --color5: #dee2e68e;
+    --color6: #fbff00;
+    --color7: #eff6ee;
+    --white: white;
+    --black: black;
+    --color8: #686868;
+    --background: #f5f5f5;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px black solid; */
+    font-family: var(--nomal-font);
+}
+
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+}
+
+
+/* HEADER */
+/* NAVIGATION BAR */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    text-decoration: none;
+    padding: 10px;
+    background-color: var(--color1);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Hiển thị menu khi di chuột vào SHOP */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5% 5%;
+    gap: 5%;
+    background-color: var(--white);
+}
+
+.navigation-bar .logo {
+    flex: 1;
+    font-family: var(--title-font);
+    font-weight: 800;
+    font-size: 34px;
+    width: 20%;
+    text-decoration: none;
+    color: var(--black);
+}
+
+.navigation-bar .search {
+    display: flex;
+    flex: 3;
+    padding-left: 2%;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--color1);
+    align-items: center;
+    justify-content: space-between;
+    gap: 2%;
+}
+
+.navigation-bar .search .search-box {
+    flex: 1;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+.navigation-bar .search button {
+    background: var(--color1);
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--white);
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+
+.navigation-bar .icons {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border: none;
+    gap: 30%;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.navigation-bar .icons a {
+    color: var(--black);
+    text-decoration: none;
+}
+
+.navigation-bar .icons .user-icon {
+    cursor: pointer;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    border: 2px transparent solid;
+    background: none;
+}
+
+.navigation-bar .icons .drop-down-menu {
+    position: absolute;
+    list-style: none;
+    right: 0;
+    bottom: -5px;
+    transform: translateY(100%);
+    width: 300px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 5px var(--color5);
+    display: none;
+    flex-direction: column;
+    overflow-y: hidden;
+    background-color: var(--white);
+    padding: 20px 10px;
+    z-index: 2;
+    gap: 5px;
+}
+
+.navigation-bar .icons .drop-down-menu label {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 5px;
+    border-radius: 5px;
+    border: 3px solid transparent;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 450;
+    background-color: var(--white);
+    border: 4px solid transparent;
+}
+.navigation-bar .icons .drop-down-menu .drop-list-item:has(img){
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.navigation-bar .icons .drop-down-menu .drop-list-item:hover:not(.drop-list-item:has(img)) {
+    background-color: var(--color5);
+    border: 4px solid var(--color5);
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item .user-info .email {
+    color: var(--black1);
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) {
+    gap: 10px;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) .icon {
+    width: 30px;
+    height: 30px;
+    padding: 3px 5px 5px 6px;
+    border-radius: 50%;
+    background-color: var(--gray);
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) .icon i {
+    color: var(--black);
+    z-index: 1;
+}
+
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) .item-content {
+    padding: 5px 0 4px 0;
+    font-size: 18px;
+}
+
+header .items {
+    position: relative;
+    display: flex;
+    white-space: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+    background-color: var(--color1);
+    padding: 8px;
+}
+
+header .items>a {
+    text-decoration: none;
+    font-family: var(--nomal-font);
+    font-size: 18px;
+    font-weight: medium;
+    color: var(--color5);
+    text-align: center;
+    padding: 0 5px;
+    border: 2px transparent solid;
+}
+
+header .items>a.active {
+    pointer-events: none;
+    color: var(--white);
+}
+
+header .items>a:hover {
+    color: var(--white);
+}
+
+.profilePopup {
+    display: none;
+    z-index: 5;
+}
+
+.profilePopup.active {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(100, 100, 100, 0.418);
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.profilePopup .contentBox {
+    position: relative;
+    height: 80%;
+    width: 80%;
+    display: block;
+    flex-direction: column;
+    background-color: var(--white);
+    /* overflow: hidden; */
+    border-radius: 4px;
+}
+
+.profilePopup .contentBox>.heading {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color5);
+}
+
+.profilePopup .contentBox .heading .nav-side-heading {
+    width: 25%;
+    height: 100%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid var(--color5);
+    font-size: 34px;
+    font-weight: 800;
+    text-align: center;
+    color: var(--color1);
+}
+
+.profilePopup .contentBox .heading .content-aside-heading {
+    flex: 1;
+    padding: 2% 5%;
+    border: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profilePopup .contentBox .heading .content-aside-heading i {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.profilePopup .contentBox .heading .content-aside-heading i:hover {
+    background-color: var(--color7);
+}
+
+.profilePopup .contentBox .aside-section {
+    display: flex;
+    height: 85%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.profilePopup .contentBox .aside-section .nav-aside {
+    display: flex;
+    min-width: 25%;
+    max-width: 25%;
+    height: 100%;
+    flex-direction: column;
+    border-right: 1px solid var(--color5);
+    align-items: center;
+    flex: 0.75;
+    padding-top: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.profilePopup .contentBox .aside-section .nav-aside .profile-btn {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    align-self: self-start;
+    padding: 5% 0;
+    border-right: 3px solid transparent;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.profilePopup .contentBox .aside-section .nav-aside .profile-btn i {
+    margin-right: 10px;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.profilePopup .contentBox .aside-section .nav-aside .profile-btn:hover {
+    background-color: var(--color5);
+    cursor: pointer;
+}
+
+.profilePopup .contentBox .aside-section .nav-aside .profile-btn.active {
+    background-color: var(--color3);
+    border-color: var(--color1);
+}
+
+.profilePopup .contentBox .aside-section .content-aside {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.profilePopup .contentBox .aside-section .content-aside.active {
+    display: block;
+    margin: auto;
+    float: left;
+    margin-top: 10px;
+    overflow-y: auto;
+    padding: 0 5%;
+    padding-bottom: 5%;
+}
+
+.profilePopup .contentBox .aside-section .content-aside>i {
+    position: absolute;
+    top: 2%;
+    right: 6%;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    color: var(--color1);
+}
+
+.profilePopup .contentBox .aside-section .content-aside>i:hover {
+    background-color: var(--color7);
+}
+
+/* custom scroll-bar */
+/* For the entire scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+    /* Width of the scrollbar */
+    height: 8px;
+    /* Height of the scrollbar (for horizontal scrollbars) */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+    background: var(--color5);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color8);
+}
+
+
+.profilePopup .contentBox .aside-section .content-aside .info-box.box-img {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilePopup .contentBox .aside-section .content-aside .info-box.box-img img {
+    width: 150px;
+    height: 150px;
+    align-self: center;
+    border-radius: 50%;
+}
+
+.profilePopup .contentBox .aside-section .content-aside .info-box.box-img button {
+    position: absolute;
+    border: var(--color8);
+    padding: 5px 10px;
+    background-color: var(--white);
+    opacity: 0.5;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.profilePopup .contentBox .aside-section .content-aside .info-box.box-img button:hover {
+    opacity: 1;
+}
+
+.profilePopup .contentBox .content-aside .info-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+.profilePopup .contentBox .content-aside .info-box:nth-child(-n+3):not(:first-child) {
+    width: 48%;
+    margin-top: 15px;
+    float: left;
+}
+
+.profilePopup .contentBox .content-aside .info-box:nth-child(3) {
+    margin-left: calc(100% - 48%*2);
+    float: right;
+}
+
+.profilePopup .contentBox .content-aside .info-box label {
+    font-size: 16px;
+    opacity: 0.6;
+}
+
+.profilePopup .contentBox .content-aside .info-box>label {
+    font-size: 15px;
+    font-weight: 550;
+}
+
+.profilePopup .contentBox .content-aside .info-box input {
+    padding: 10px 5px;
+    border-radius: 4px;
+    border: 2px solid var(--color5);
+}
+
+.profilePopup .contentBox .content-aside .info-box input:disabled {
+    background-color: var(--white);
+}
+
+.profilePopup .contentBox .content-aside .info-box span {
+    margin-left: 20px;
+}
+
+.profilePopup .contentBox .content-aside .info-box span label {
+    margin-right: 10px;
+}
+
+.profilePopup .contentBox .content-aside .submitBtn {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.profilePopup .contentBox .content-aside .submitBtn button {
+    padding: 10px;
+    width: 100px;
+    cursor: pointer;
+    background-color: var(--color1);
+    border: 2px solid transparent;
+    border-radius: 4px;
+    color: var(--white);
+    font-weight: 500;
+}
+
+.profilePopup .contentBox .content-aside .submitBtn button:nth-child(1) {
+    border: 2px solid var(--color1);
+    background-color: var(--white);
+    color: var(--color1);
+
+}
+
+.profilePopup .contentBox .content-aside .submitBtn button:hover {
+    transform: scale(1.05);
+}
+
+/* Order history */
+.profilePopup .contentBox .content-aside .item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.profilePopup .contentBox .content-aside .item .head {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border: 1px solid var(--color5);
+    /* gap: 10px; */
+    padding: 0 10px;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell {
+    width: 25%;
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell:not(:first-child) {
+    border-left: 1px solid var(--color5);
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell:nth-last-child(-n+2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell .title {
+    font-size: 15px;
+    font-weight: 550;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell .value {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell>button {
+    background-color: transparent;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--color8);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.profilePopup .contentBox .content-aside .item .head .cell>button:hover {
+    background-color: var(--color5);
+}
+
+.profilePopup .contentBox .content-aside .item .book {
+    display: flex;
+    flex-direction: row;
+    max-height: 150px;
+    padding: 2% 0;
+    border: 1px solid var(--color5);
+    border-top: transparent;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-image {
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    height: auto;
+    overflow: hidden;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-image img {
+    /* width: 100%; */
+    height: 100%;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 15px;
+    padding-right: 30px;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .name-amount-cost {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .name-amount-cost .name-amount {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .name-amount-cost .name-amount .amount {
+    font-size: 12px;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .name-amount-cost .cost {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color1);
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .decription {
+    font-size: 13px;
+    flex: 1;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .actionBtn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.profilePopup .contentBox .content-aside .item .book .book-details .actionBtn a {
+    text-decoration: none;
+    color: var(--color1);
+}
+
+/* order component */
+.popupOrder {
+    display: none;
+    z-index: 10;
+}
+
+.popupOrder.active {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(51, 51, 51, 0.781);
+    justify-content: center;
+    top: 0;
+    left: 0;
+}
+
+.popupOrder.active .order-form {
+    position: relative;
+    width: 60%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--white);
+    overflow: scroll;
+    border-radius: 5px;
+    padding: 2% 0;
+}
+
+.popupOrder.active .order-form .heading {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color1);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.popupOrder.active .order-form .subheading {
+    margin-top: 10px;
+    padding: 0 5px;
+    width: 80%;
+    font-weight: 600;
+    color: var(--color1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.popupOrder.active .order-form .subheading div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.popupOrder.active .order-form .subheading i {
+    position: absolute;
+    top: 5%;
+    right: calc(10% - 5px);
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.popupOrder.active .order-form .subheading i:hover {
+    cursor: pointer;
+    background-color: var(--color7);
+
+}
+
+.popupOrder.active .order-form .list-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 30%;
+    padding: 2%;
+    /* border-radius: 5px; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 80%;
+    scrollbar-width: none;
+    scrollbar-color: var(--color8);
+    box-shadow: inset 0 0 4px #adadad;
+    gap: 5%;
+}
+
+.popupOrder.active .order-form .list-items .item {
+    overflow: hidden;
+    width: 100%;
+    min-height: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* padding: 0 5%; */
+    gap: 2%;
+}
+
+.popupOrder.active .order-form .list-items .item .image {
+    width: fit-content;
+    height: 100%;
+}
+
+.popupOrder.active .order-form .list-items .item .image img {
+    height: 100%;
+}
+
+.popupOrder.active .order-form .list-items .item .details {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.popupOrder.active .order-form .list-items .item .details .name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.popupOrder.active .order-form .list-items .item .details .amount {
+    color: var(--color8);
+}
+
+.popupOrder.active .order-form .list-items .item .cost {
+    color: var(--color1);
+    font-size: 13px;
+    font-weight: 550;
+}
+
+.popupOrder.active .order-form .Information {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.popupOrder.active .order-form label {
+    font-size: 13px;
+    padding: 2px;
+    flex: 3;
+}
+
+.popupOrder.active .order-form .Information .subheading {
+    width: 100%;
+}
+
+.popupOrder.active .order-form label:first-child {
+    white-space: nowrap;
+    font-weight: 550;
+    flex: 1;
+    color: var(--color8);
+}
+
+.popupOrder.active .order-form .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
+    box-shadow: inset 0 0 4px #adadad;
+}
+
+.popupOrder.active .order-form .user-info .input-box {
+    float: left;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 0 2%;
+}
+
+.popupOrder.active .order-form .user-info input {
+    /* width: 60%; */
+    border: 1px solid var(--black);
+    border-radius: 2px;
+    padding: 2px;
+    font-size: 13px;
+    flex: 3;
+}
+
+.popupOrder.active .order-form .user-info select {
+    flex: 3;
+    padding: 2px;
+}
+
+.popupOrder.active .order-form .payments {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.popupOrder.active .order-form .payments .totals>div {
+    display: flex;
+    gap: 30px;
+    justify-content: flex-end;
+}
+
+.popupOrder.active .order-form .payments label {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.popupOrder.active .order-form .submit {
+    /* position: absolute; */
+    display: flex;
+    width: 80%;
+    justify-content: flex-end;
+    gap: 5%;
+}
+
+.popupOrder.active .order-form .submit button {
+    bottom: 5%;
+    right: 5%;
+    padding: 6px 30px;
+    border-radius: 5px;
+    font-weight: 600;
+    background-color: var(--color1);
+    color: var(--white);
+    border: 2px solid var(--color1);
+    cursor: pointer;
+}
+
+.popupOrder.active .order-form .submit button:hover {
+    transform: scale(1.1);
+}
+
+/* Feedback */
+.popupFeedback {
+    display: none;
+    z-index: 10;
+}
+
+.popupFeedback.active {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(51, 51, 51, 0.781);
+    justify-content: center;
+    top: 0;
+    left: 0;
+}
+
+.popupFeedback.active .feedback-form {
+    position: relative;
+    width: 60%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--white);
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 3%;
+}
+
+.popupFeedback.active .feedback-form .ri-close-fill {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+    position: absolute;
+    right: 10%;
+    top: 7%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.popupFeedback.active .feedback-form .ri-close-fill:hover {
+    background-color: var(--color5);
+
+}
+
+.popupFeedback.active .feedback-form .heading {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color1);
+    width: 100%;
+    padding: 0 0 0 5%;
+}
+
+.popupFeedback.active .feedback-form .input-box {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 10px;
+}
+
+.popupFeedback.active .feedback-form .input-box label {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.popupFeedback.active .feedback-form .input-box .list-item {
+    display: flex;
+    gap: 10px;
+    padding: 2% 5%;
+}
+
+.popupFeedback.active .feedback-form .input-box .list-item .rate {
+    font-size: 24px;
+    /* padding: 10px; */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color7);
+    cursor: pointer;
+    border-radius: 50%;
+    color: var(--black);
+}
+
+.popupFeedback.active .feedback-form .input-box:nth-of-type(3) .list-item .rate {
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.popupFeedback.active .feedback-form .input-box .list-item .rate.active {
+    background-color: var(--color3);
+    color: var(--color1);
+}
+
+.popupFeedback.active .feedback-form .input-box .list-item .rate:not(.active):hover {
+    background-color: var(--color5);
+}
+
+.popupFeedback.active .feedback-form .submit {
+    display: flex;
+    width: 90%;
+    justify-content: flex-end;
+    gap: 5%;
+}
+
+.popupFeedback.active .feedback-form .input-box:has(textarea) {
+    flex: 1;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.popupFeedback.active .feedback-form .input-box textarea {
+    flex: 1;
+    border: 1px solid var(--color8);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.popupFeedback.active .feedback-form .input-box textarea:focus {
+    outline: 1.5px solid var(--color4);
+}
+
+.popupFeedback.active .feedback-form .submit button {
+    /* position: absolute; */
+    width: 100%;
+    padding: 5px 20px;
+    background-color: var(--color1);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    color: var(--white);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.popupFeedback.active .feedback-form .submit button:hover {
+    transform: scale(1.01);
+}

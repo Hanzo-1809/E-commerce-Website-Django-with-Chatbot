@@ -1,0 +1,69 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'app/css/Login.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+
+<body>
+    <article>
+        <div class="LoginBox">
+            <div class="title_container">
+                <a href="{% url 'home' %}" class="logo">JBOOK</a>
+                <p class="title">Welcome back!</p>
+                <span class="subtitle">Please login to your account</span>
+            </div>
+            
+            <form action="" method="post" class="form-container">
+                {% csrf_token %}
+                <div class="username">
+                    <input type="text" name="username" id="username" placeholder="Username or Email Address" required="required"{{ form.username }}>
+                    <i class="ri-user-line"></i>
+                </div>
+                <div class="password">
+                    <input type="text" name="password" id="password" placeholder="Password" required="required" {{ form.password }}>
+                    <i class="ri-eye-line"></i>
+                </div>
+                <div class="link-box">
+                    <div class="checkbox">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <div class="submit-btn">
+                    <button type="submit">Login</button>
+                    <p>Don't have an account? <a href="{% url 'register'%}">Sign in</a></p>
+                </div>
+                {% for message in messages%}
+
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                <div class="text-box">
+                    --- Or ---
+                </div>
+                <div class="link-login-box">
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/facebook-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/google-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/twitter-color-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                </div>
+            </form>
+        </div>
+    </article>
+</body>
+<script src="{% static 'app/js/Login.js' %}"></script>
+
+</html>

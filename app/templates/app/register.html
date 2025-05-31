@@ -1,0 +1,80 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'app/css/signup.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+
+<body>
+    <article>
+        <div class="signupForm">
+            <div class="title_container">
+                <a href="index.jsp" class="logo">JBOOK</a>
+                <p class="title">Create Account</p>
+                <span class="subtitle">Discover a world of knowledge</span>
+            </div>
+            
+            <form action="" method="post" class="form-container">
+                {% csrf_token %}
+                <div class="email">
+                    <input type="text" name="username" id="username" placeholder="Username" {{ form.username }}>
+                    <i class="ri-user-line"></i>
+                </div>
+                
+                <div class="email">
+                    <input type="text" name="email" id="email" placeholder="Email Address" {{ form.email }}>
+                    <i class="ri-user-line"></i>
+                </div>
+                
+                <div class="email">
+                    <input type="text" name="first_name" id="first_name" placeholder="First Name" {{ form.first_name }}>
+                    <i class="ri-user-line"></i>
+                </div>
+                
+                <div class="email">
+                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" {{ form.last_name }}>
+                    <i class="ri-user-line"></i>
+                </div>
+                
+                <div class="password">
+                    <input type="password" name="password1" id="password1" placeholder="Password" {{ form.password1 }}>
+                    <i class="ri-eye-line"></i>
+                </div>
+                
+                <div class="password">
+                    <input type="password" name="password2" id="password2" placeholder="Confirm Password"   {{ form.password2 }}>
+                    <i class="ri-eye-line"></i>
+                </div>
+                
+                <div class="submit-btn">
+                    <button type="submit">Sign Up</button>
+                    <p>Already have an account? <a href={% url 'login' %}>Login</a></p>
+                </div>
+                
+                <div class="text-box">
+                    --- Or Sign up with ---
+                </div>
+       
+                <div class="link-login-box">
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/facebook-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/google-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                    <a class="link-login-box-item" href="#">
+                        <img src="img/twitter-color-svgrepo-com.svg" alt="SVG image">
+                    </a>
+                </div>
+            </form>
+        </div>
+    </article>
+</body>
+<script src="{% static 'app/js/signup.js' %}"></script>
+
+</html>

@@ -1,0 +1,1525 @@
+{% load static %}
+{% include 'app/navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{% static 'app/css/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+
+</head>
+<body>
+    <main>
+      <section class="section" id="section1">
+        <img src="{% static 'app/images/banner4.png' %}" alt="">
+        <button>
+          <a href="Shop.jsp">SHOP NOW</a>
+        </button>
+      </section>
+  
+      <section class="section section2" id="section2">
+        <div class="heading">
+          <div class="title">Trending book</div>
+          <a href="Shop.jsp">View all <i class="ri-arrow-right-line"></i></a>
+        </div>
+  
+  
+        <div class="slider-wrapper">
+          <button class="prev-btn">
+            <i class="ri-arrow-left-s-line"></i>
+          </button>
+          <button class="next-btn">
+            <i class="ri-arrow-right-s-line"></i>
+          </button>
+  
+  <div class="slider-wrapper-item">
+    {% for product in products %}
+      <div class="card">
+        <a href="{% url 'detail' %}?id={{product.id}}" class="img-box">
+          <img src="{{ product.ImageURL }}" alt="">
+        </a>
+        <a href="" class="book-title">{{ product.name }}</a>
+        <div class="book-cost">
+          <div class="cost">{{ product.price|floatformat:2 }}</div>
+        </div>
+        <div class="sold">
+          <p>Sold:</p>
+          <p>5.5k</p>
+          <div class="rates">
+            <div class="star">
+              {% for i in "12345" %}
+                <i class="ri-star{% if product.rating < i %}-half-line{% else %}-fill{% endif %}"></i>
+              {% endfor %}
+            </div>
+            <div class="rate">120.212  votes</div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+      </section>
+      <section class="section section2" id="section3">
+        <div class="heading">
+          <div class="title">Flash sales</div>
+          <a href="Shop.jsp">View all <i class="ri-arrow-right-line"></i></a>
+        </div>
+        <div class="slider-wrapper">
+          
+  
+  
+          <div class="slider-wrapper-item">
+            {% for product in products %}
+              <div class="card">
+                <a href="{% url 'detail' %}?=id{{product.id}}" class="img-box">
+                  <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                </a>
+                <a href="" class="book-title">{{ product.name }}</a>
+                <div class="book-cost">
+                  <div class="cost">{{ product.price|floatformat:2 }}</div>
+                </div>
+                <div class="sold">
+                  <p>Sold:</p>
+                  <p>{{ product.sold }}</p>
+                  <div class="rates">
+                    <div class="star">
+                      {% for i in "12345" %}
+                        <i class="ri-star{% if product.rating < i %}-half-line{% else %}-fill{% endif %}"></i>
+                      {% endfor %}
+                    </div>
+                    <div class="rate">{{ product.votes }} votes</div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+      
+      </section>
+      <section class="section" id="section4">
+        <div class="heading">
+          <div class="title">Books of the week</div>
+        </div>
+        <div class="wrapper">
+          <div class="links">
+            <a class="active">Literary</a> <a>Economic</a> <a>Foreign books</a>
+            <a>Kid-books</a> <a>Spychology-life skills</a>
+          </div>
+          <div class="tab-contents">
+            <!-- literary -->
+            <div class="tab-content active">
+              <div class="top-rank-wrapper">
+                <div class="top-rank">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="rank">01</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success1</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 2 -->
+                  <div class="item">
+                    <div class="rank">02</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="rank">03</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="rank">04</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="rank">05</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="top-rank-content">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top2 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success3</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button>
+                <a href="#">Show more</a>
+              </button>
+            </div>
+            <!-- Economic -->
+            <div class="tab-content">
+              <div class="top-rank-wrapper">
+                <div class="top-rank">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="rank">01</div>
+                    <a href="#" class="book"><img src="img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success11</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 2 -->
+                  <div class="item">
+                    <div class="rank">02</div>
+                    <a href="#" class="book"><img src="img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="rank">03</div>
+                    <a href="#" class="book"><img src="img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="rank">04</div>
+                    <a href="#" class="book"><img src="img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="rank">05</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="top-rank-content">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success1</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top2 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success3</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button>
+                <a href="#">Show more</a>
+              </button>
+            </div>
+            <!-- Foreign books -->
+            <div class="tab-content">
+              <div class="top-rank-wrapper">
+                <div class="top-rank">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="rank">01</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success11</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 2 -->
+                  <div class="item">
+                    <div class="rank">02</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="rank">03</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="rank">04</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="rank">05</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="top-rank-content">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success1</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top2 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success3</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button>
+                <a href="#">Show more</a>
+              </button>
+            </div>
+            <!-- Kid-books -->
+            <div class="tab-content">
+              <div class="top-rank-wrapper">
+                <div class="top-rank">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="rank">01</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success11</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 2 -->
+                  <div class="item">
+                    <div class="rank">02</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="rank">03</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="rank">04</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="rank">05</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="top-rank-content">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success1</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top2 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success3</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button>
+                <a href="#">Show more</a>
+              </button>
+            </div>
+            <!-- spychology-life skills -->
+            <div class="tab-content">
+              <div class="top-rank-wrapper">
+                <div class="top-rank">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="rank">01</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success11</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 2 -->
+                  <div class="item">
+                    <div class="rank">02</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="rank">03</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="rank">04</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="rank">05</div>
+                    <a href="#" class="book"><img src="./resource/img/4.png"
+                      alt=""></a>
+                    <div class="book-details">
+                      <a href="#" class="title">The way to success</a>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="top-rank-content">
+                  <!-- top 1 -->
+                  <div class="item active">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success1</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top2 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 3 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success3</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 4 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>BUY NOW</button>
+                        <button>
+                          ADD TO CART<i class="ri-shopping-cart-line"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- top 5 -->
+                  <div class="item">
+                    <div class="book">
+                      <img src="./resource/img/4.png" alt="">
+                    </div>
+                    <div class="book-details">
+                      <div class="title">The way to success</div>
+                      <div class="author">Francois Mercer</div>
+                      <div class="rates">
+                        <div class="star">
+                          <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                            class="ri-star-half-line"></i>
+                        </div>
+                        <div class="rate">120.212 votes</div>
+                      </div>
+                      <div class="cost">
+                        <div class="sold-cost">105.000 vnd</div>
+                        <div class="old-cost">150.000 vnd</div>
+                      </div>
+                      <div class="description">Lorem, ipsum dolor sit amet
+                        consectetur adipisicing elit. Dolores, autem sapiente debitis
+                        modi quam est voluptates nihil possimus repellat sed nemo
+                        necessitatibus ipsum velit pariatur amet, officiis harum
+                        tenetur quae.</div>
+                      <div class="buy-btn">
+                        <button>
+                          ADD TO CART <i class="ri-shopping-cart-line"></i>
+                        </button>
+                        <button>BUY NOW</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button>
+                <a href="#">Show more</a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section2" id="section5">
+        <div class="heading">
+          <div class="title">Featured books</div>
+          <a href="Shop.jsp">View all <i class="ri-arrow-right-line"></i></a>
+        </div>
+        <div class="slider-wrapper">
+          
+            <%
+          BookDAOImpl dao4 = new BookDAOImpl(DBConnect.getConn());
+          List<BookDtls> list4 = dao3.getAllNewBook();
+          for (BookDtls b : list3) {
+          %>
+  
+  
+          <div class="slider-wrapper-item">
+  
+            <div class="card">
+              <a href="ProductPage.jsp?bid=<%=b.getBookId()%>" class="img-box"> <img
+                src="book/<%=b.getPhotoName()%>" alt="">
+              </a> <a href="ProductPage.jsp" class="book-title"><%=b.getBookName()%></a>
+  
+              <div class="book-cost">
+                <div class="cost"><%=b.getPrice()%></div>
+  
+              </div>
+              <div class="sold">
+                <p>Sold:</p>
+                <p>5.5k</p>
+                <div class="rates">
+                  <div class="star">
+                    <i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                      class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+                      class="ri-star-half-line"></i>
+                  </div>
+                  <div class="rate">120.212 votes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <%
+          }
+          %>
+  
+        </div>
+            
+          
+      </section>
+    </main>
+    <footer>
+      <div class="box box1">JBOOK</div>
+      <div class="box box2">
+        <div class="title">Home</div>
+        <a href="./Shop.html">Shop</a> <a href="">Blog</a> <a
+          href="./AboutUs.html">About Us</a>
+      </div>
+      <div class="box box3">
+        <div class="title">Categories</div>
+        <a href="./Shop.html">Fiction</a> <a href="./Shop.html">Lifestyle</a>
+        <a href="./Shop.html">Comic book</a> <a href="./Shop.html">Food &
+          drink</a>
+      </div>
+      <div class="box box4">
+        <div class="title">Contact</div>
+        <p>Call: +84 762 2123</p>
+        <p>Address: 54 Nguyen Luong Bang,Hoa Khanh Bac ward, Lien Chieu
+          district, Da Nang, Vietnam</p>
+        <p>Email: pbl3example@email.com</p>
+      </div>
+    </footer>
+<br /> <br /> <br />
+
+<script src="{% static 'app/js/script.js' %}"></script>
+
+</body>
+</html>
