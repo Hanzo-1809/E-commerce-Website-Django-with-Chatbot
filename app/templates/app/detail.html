@@ -1,0 +1,206 @@
+{% load static %}
+{% include 'app/navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="{% static 'app/css/ProductPage.css' %}">
+<script src="{% static 'app/js/ProductPage.js'%}"></script>
+<script src="{% static 'app/js/cart.js'%}"></script>
+<script src="{% static 'app/js/myscript.js' %}"></script>
+
+
+</head>
+
+<body>
+	
+	<main>
+		
+		<div class="product">
+			{% for product in products %}
+			<div class="section1">
+				<div class="image-section">
+					<div class="img-show">
+						<img src="{% static 'app/images/4.png' %}" >
+					</div>
+					<div class="img-list">
+						<button class="prev-btn">
+							<i class="ri-arrow-drop-up-line"></i>
+						</button>
+						<div class="list">
+							<img src="{{ product.ImageURL }}" alt="">
+							<img src="{{ product.ImageURL }}" alt="">
+							<img src="{{ product.ImageURL }}" alt="">
+							<img src="{{ product.ImageURL }}" alt="">
+							<img src="{{ product.ImageURL }}" alt="">
+						</div>
+						<button class="next-btn">
+							<i class="ri-arrow-drop-down-line"></i>
+						</button>
+					</div>
+				</div>
+				<div class="product-info">
+					<div class="book-title">{{ product.name }}</div>
+					<div class="book-author">{{ product.author }}</div>
+					<div class="book-cost">
+						<div class="cost">{{ product.price }}</div>
+					</div>
+					<div class="rates">
+						<div class="star">
+							<i class="ri-star-fill"></i>
+							<i class="ri-star-fill"></i>
+							<i class="ri-star-fill"></i>
+							<i class="ri-star-fill"></i>
+							<i class="ri-star-half-line"></i>
+						</div>
+						<div class="rate">120,212 votes</div>
+					</div>
+					<div class="description"></div>
+					<div class="buy-info">
+						<div class="input">
+							<button class="minus">-</button>
+							<label class="amount">1</label>
+							<button class="plus">+</button>
+						</div>
+						<div class="btn">
+							<button class="update-cart" data-product={{product.id}} data-action = "add" >Add Cart</button>
+							<button >Buy Now</button>
+						</div>
+					</div>
+					<div class="addition-description">
+						<div class="categories">
+							<div class="tag">Categories:</div>
+							<div class="list-tag">{{ product.category }}</div>
+						</div>
+						<div class="share-product">
+							Share this product 
+							<a href="#"><i class="fa-brands fa-facebook" style="color: blue;"></i></a>
+							<a href="#"><i class="fa-brands fa-instagram" style="color: orangered;"></i></a>
+							<a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="comment-section">
+				<div class="heading">
+					<div class="title">Community Reviews</div>
+					<div class="rates">
+						<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+							class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+							class="ri-star-half-line"></i>
+					</div>
+					<div class="vote">12 532 votes</div>
+				</div>
+
+				<div class="review-box">
+					<div class="reviewer-img">
+						<img src="{% static 'app/images/banner4.png' %}" alt="" srcset="">
+					</div>
+					<div class="review-main">
+						<div class="heading-review">
+							<div class="sub-heading">
+								<div class="nam">Eugene Scheneider</div>
+								<div class="rate">
+									<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+										class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+										class="ri-star-half-line"></i>
+								</div>
+							</div>
+							<div class="review-time">Feb 27, 2013</div>
+						</div>
+						<div class="review-content">Lorem ipsum dolor, sit amet
+							consectetur adipisicing elit. Deserunt ad numquam perspiciatis
+							reiciendis obcaecati minus veritatis nesciunt beatae deleniti
+							dicta. Magni asperiores porro eaque eveniet earum aperiam, vero
+							fugiat mollitia. Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Dignissimos, odio quia aperiam ex nemo delectus
+							soluta totam eum quos fuga autem numquam mollitia natus? Iusto
+							doloribus rerum id autem. Quis! Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Doloribus praesentium sint voluptas
+							inventore voluptatibus alias incidunt, aut, nihil maxime tempore
+							hic sequi blanditiis ducimus numquam ab cupiditate autem.
+							Voluptatibus, ipsum?</div>
+					</div>
+				</div>
+				<div class="review-box">
+					<div class="reviewer-img">
+						<img src="img/customer2.jpg" alt="" srcset="">
+					</div>
+					<div class="review-main">
+						<div class="heading-review">
+							<div class="sub-heading">
+								<div class="nam">Eugene Scheneider</div>
+								<div class="rate">
+									<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+										class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
+										class="ri-star-half-line"></i>
+								</div>
+							</div>
+							<div class="review-time">Feb 27, 2013</div>
+						</div>
+						<div class="review-content">Lorem ipsum dolor, sit amet
+							consectetur adipisicing elit. Deserunt ad numquam perspiciatis
+							reiciendis obcaecati minus veritatis nesciunt beatae deleniti
+							dicta. Magni asperiores porro eaque eveniet earum aperiam, vero
+							fugiat mollitia. Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Dignissimos, odio quia aperiam ex nemo delectus
+							soluta totam eum quos fuga autem numquam mollitia natus? Iusto
+							doloribus rerum id autem. Quis! Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Doloribus praesentium sint voluptas
+							inventore voluptatibus alias incidunt, aut, nihil maxime tempore
+							hic sequi blanditiis ducimus numquam ab cupiditate autem.
+							Voluptatibus, ipsum?</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="related-books">
+			<div class="heading">Related books</div>
+			<a href="#" class="books">
+				<div class="book">
+					<div class="book-img">
+						<img src="img/2.png" alt="">
+					</div>
+					<div class="book-info">
+						<div class="book-name">The Young Wizard</div>
+						<div class="book-author">Aarong Loeb</div>
+						<div class="book-cost">105.000 vnd</div>
+					</div>
+				</div>
+			</a> <a href="#" class="books">
+				<div class="book">
+					<div class="book-img">
+						<img src="img/2.png" alt="">
+					</div>
+					<div class="book-info">
+						<div class="book-name">The Young Wizard</div>
+						<div class="book-author">Aarong Loeb</div>
+						<div class="book-cost">105.000 vnd</div>
+					</div>
+				</div>
+			</a> <a href="#" class="books">
+				<div class="book">
+					<div class="book-img">
+						<img src="img/2.png" alt="">
+					</div>
+					<div class="book-info">
+						<div class="book-name">The Young Wizard</div>
+						<div class="book-author">Aarong Loeb</div>
+						<div class="book-cost">105.000 vnd</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</main>
+</body>
+<link
+	href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+	rel="stylesheet" />
+<script src="https://kit.fontawesome.com/e962eb835c.js"
+	crossorigin="anonymous"></script>
+
+</html>

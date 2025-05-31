@@ -1,0 +1,632 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: 'Giants';
+    src: url("./resource/font/Giants.ttf") format("truetype");
+}
+
+:root {
+    --nomal-font: "poppins";
+    --title-font: "Montserrat";
+
+    --color1:#c1121f;
+    --color2:#780000;   
+    --color3:#fdf0d5;
+    --color4:#fbff00;
+    --color5:#dee2e68e;
+    --color6:#d8171a;
+    --color7:#dddddd;
+    --color8:#6b9080;
+    --white:white;
+    --black: black;
+    --background:#F5F5F5;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 1px black solid; */
+    font-family: var(--nomal-font);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+}
+
+
+/* HEADER */
+/* NAVIGATION BAR */
+
+/* Main page */
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+}
+
+main .section {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--white);
+}
+
+/* SECTION 1 */
+main #section1 {
+    height: 60vh;
+}
+
+main #section1 img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+main #section1 button {
+    position: absolute;
+    top: 55%;
+    left: 23%;
+    z-index: 1;
+    background: var(--black);
+    border: none;
+    border-radius: 25px;
+    animation: blink 1.5s infinite;
+    padding: 10px 30px;
+}
+
+@keyframes blink {
+    50%{
+        /* opacity: %; */
+        text-shadow: 0 0 5px var(--color4),0 0 10px var(--color4),0 0 15px var(--color4);
+        /* box-shadow: 0 0 5px var(--color4),0 0 10px var(--color4),0 0 15px var(--color4); */
+    }
+}
+
+main #section1 button a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* SECTION 2 */
+main .section2 {
+    flex-direction: column;
+    overflow: inherit;
+    width: 90%;
+    border-radius: 10px;
+}
+
+main .section2 .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--color7);
+    padding: 1%;
+}
+
+main .section2 .heading .title {
+    text-decoration: none;
+    color: var(--color1);
+    font-size: 25px;
+    font-weight: 800;
+    /* padding: 2% 0; */
+}
+
+main .section2 .heading a {
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--color8);
+}
+
+main .section2 .heading a:hover {
+    color: var(--color1);
+}
+
+main .section2 .slider-wrapper {
+    position: relative;
+    display: flex;
+}
+main .section2 .slider-wrapper .slider-wrapper-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 30px;
+    width: 100%;
+    overflow-x: scroll;
+    border-radius: 10px;
+    padding: 2%;
+    transition: all 0.5s ease;
+}
+
+main .section2 .slider-wrapper .slider-wrapper-item::-webkit-scrollbar{
+    display: none;
+}
+
+
+main .section2 .slider-wrapper .prev-btn,
+main .section2 .slider-wrapper .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color7);
+    border-radius: 50%;
+    color: var(--black);
+    border: none;
+    font-weight: 600;
+    padding: 8px 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+main .section2 .slider-wrapper .prev-btn {
+    /* visibility: hidden; */
+    left: 0;
+    transform: translateX(-50%);
+}
+
+main .section2 .slider-wrapper .next-btn {
+    right: 0;
+    transform: translateX(50%);
+}
+
+
+main .section2 .slider-wrapper .card {
+    position: relative;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 350px;
+    padding: 5% 0;
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: transform 0.5s ease;
+    box-shadow: 0 0 15px var(--color7);
+}
+
+main .section2 .slider-wrapper .card:hover {
+    box-shadow: 0 0 10px var(--color7),0 0 20px var(--color7);
+}
+
+main .section2 .slider-wrapper .card .img-box {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 2%;
+}
+
+main .section2 .slider-wrapper .card .img-box img {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+main .section2 .slider-wrapper .card .book-title {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 15px;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-decoration: none;
+    color: var(--black);
+}
+
+main .section2 .slider-wrapper .card .book-cost {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color6);
+    font-size: 18px;
+    font-weight: 800;
+    width: 90%;
+}
+
+main .section2 .slider-wrapper .card .book-cost .old-cost {
+    text-decoration: line-through;
+    font-size: 15px;
+    color: var(--color8);
+}
+
+main .section2 .slider-wrapper .card .rates {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 90%;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+main .section2 .slider-wrapper .card .rates .star {
+    color: var(--color4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .section2 .slider-wrapper .card .rates .rate {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .section2 .slider-wrapper .card .sold {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+main .section2 .slider-wrapper .card .sold p {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .section2 .slider-wrapper .card .sold p:first-child {
+    color: var(--color8);
+}
+
+/* SECTION 3 */
+
+main #section4 {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    border-radius: 10px;
+}
+
+main #section4 .heading {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main #section4 .heading .title {
+    font-size: 18px;
+    text-decoration: none;
+    color: var(--white);
+    background-color: var(--color1);
+    font-size: 25px;
+    font-weight: 800;
+    padding: 1%;
+}
+
+main #section4 .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 90vh;
+}
+
+main #section4 .wrapper .tab-contents {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+main #section4 .wrapper .tab-contents .tab-content {
+    display: none;
+}
+
+main #section4 .wrapper .tab-contents .tab-content.active {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%; 
+    height: 100%;
+}
+
+main #section4 .wrapper .links {
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    padding: 0 1%;
+    flex: 1;
+    border-bottom: 2px solid var(--color6);
+}
+
+main #section4 .wrapper .links a {
+    color: var(--color8);
+    padding: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+main #section4 .wrapper .links .active {
+    color: var(--color1);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 1%;
+    width: 100%;
+    gap: 10px;
+    height: 100%;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank {
+    display: flex;
+    flex-direction: column;
+    /* gap: 2%; */
+    width: fit-content;
+    width: 40%;
+    justify-content: flex-start;
+    padding-right: 1%;
+    border-right: 2px solid var(--color7);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .item {
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+    align-items: center;
+    border-radius: 4px;
+    min-height: 100px;
+    width: 100%;
+    padding: 1%;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .item:hover {
+    box-shadow: 0 0 8px var(--color8);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .item .book {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .item .rank {
+    color: var(--color1);
+    font-weight: 600;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .item .book img {
+    width: auto;
+    height: 100px;
+    object-fit: contain;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 2%;
+    height: 100%;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .title {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--black);
+}
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .title:hover{
+    text-decoration: underline;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .author {
+    font-size: 13px;
+    color: var(--color8);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .rates {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .rates .star {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color4);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank .book-details .rates .rate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+}
+
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content {
+    position: relative;
+    height: 80vh;
+    width: 60%;
+    /* overflow: hidden; */
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item {
+    display: none;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active {
+    position: absolute;
+    padding: 0 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 3%;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--black);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .author {
+    font-size: 15px;
+    color: var(--color8);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .rates {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 16px;
+    color: var(--color4);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .rates .rate {
+    color: var(--black);
+    /* opacity: 80%; */
+    font-size: 12px;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .cost .sold-cost {
+    color: var(--color6);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .cost .old-cost {
+    color: var(--color8);
+    font-size: 15px;
+    text-decoration: line-through;
+    font-weight: 800;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .description {
+    font-size: 16px;
+
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .buy-btn{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 2% 0;
+    justify-content: center;
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .buy-btn button{
+    padding: 10px 15px;
+    border-radius: 5px;
+    border:2px solid var(--color1);
+    left: 50%;
+    background: var(--color1);
+    transition: all 0.2s;
+    cursor: pointer;
+    color: var(--white);
+    font-weight: 500;
+}
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .buy-btn button:first-child{
+    background: none;
+    color: var(--color1);
+}
+
+main #section4 .wrapper .tab-contents .tab-content .top-rank-wrapper .top-rank-content .item.active .book-details .buy-btn button:hover{
+    transform: scale(1.05);
+}
+
+main #section4 .wrapper .tab-contents .tab-content > button {
+    position: absolute;
+    padding: 1% 4%;
+    border-radius: 30px;
+    border: none;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom right, var(--color1), var(--color4));
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+main #section4 .wrapper .tab-contents .tab-content > button:hover {
+    box-shadow: 0 0 8px var(--color1);
+    transform: translateX(-50%) scale(1.1);
+}
+
+main #section4 .wrapper .tab-contents .tab-content > button a {
+    text-decoration: none;
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* FOOTER */
+footer {
+    color: var(--white);
+    margin-top: 20px;
+    background-color: var(--color1);
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 5%;
+}
+
+footer .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    flex: 1;
+}
+
+footer .box.box1 {
+    font-family: var(--title-font);
+    font-weight: 800;
+    font-size: 60px;
+    justify-content: center;
+}
+
+footer .box .title {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+footer .box a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+footer .box a:hover {
+    color: var(--color4)
+}

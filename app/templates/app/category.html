@@ -1,0 +1,44 @@
+{% load static %}
+{% include 'app/navbar.html' %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JBOOK</title>
+    <link rel="stylesheet" href="{% static 'app/css/navbar.css' %}">
+</head>
+
+<body>
+  <main class = "hero" >
+  <div class = "section1" >
+    <div class="slider-wrapper-item">
+        {% for product in products %}
+          <div class="card">
+            <a href="" class="img-box">
+              <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+            </a>
+            <a href="" class="book-title">{{ product.name }}</a>
+            <div class="book-cost">
+              <div class="cost">{{ product.price|floatformat:2 }}</div>
+            </div>
+            <div class="sold">
+              <p>Sold:</p>
+              <p>{{ product.sold }}</p>
+              <div class="rates">
+                <div class="star">
+                  {% for i in "12345" %}
+                    <i class="ri-star{% if product.rating < i %}-half-line{% else %}-fill{% endif %}"></i>
+                  {% endfor %}
+                </div>
+                <div class="rate">{{ product.votes }} votes</div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+</body>
+</html>
