@@ -1,4 +1,5 @@
-# QLDA_22NH11_G8_CyberBug — Web Bán Hàng (webbanhang2)
+
+Web Bán Hàng (webbanhang2)
 Đồ án Quản Lý Dự Án (QLDA) — Nhóm G8 (CyberBug)
 
 Ứng dụng web bán hàng mẫu được xây dựng bằng Django. Dự án tích hợp nhiều tính năng thực tế: quản lý sản phẩm, giỏ hàng, thanh toán đơn giản, tài khoản người dùng, giao diện admin, và một chatbot tích hợp với nhiều dịch vụ (OpenAI, HuggingFace, Deepseek, Dialogflow) để hỗ trợ người dùng.
