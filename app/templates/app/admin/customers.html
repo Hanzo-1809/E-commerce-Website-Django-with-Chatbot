@@ -1,0 +1,159 @@
+{% extends 'app/admin/base.html' %}
+
+{% block title %}Customer Management{% endblock %}
+{% block page_title %}Customer Management{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold text-primary">Customers List</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered datatable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                        <th>Orders</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.username }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.date_joined|date:"d M Y" }}</td>
+                        <td>{{ customer.order_set.count }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#viewCustomerModal{{ customer.id }}">
+                                <i class="ri-eye-line"></i>
+                            </button>
+                            {% if not customer.is_superuser %}
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal{{ customer.id }}">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% for customer in customers %}
+<!-- View Customer Modal -->
+<div class="modal fade" id="viewCustomerModal{{ customer.id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Customer Details - {{ customer.username }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>Basic Information</h6>
+                        <p>
+                            Username: {{ customer.username }}<br>
+                            Email: {{ customer.email }}<br>
+                            Date Joined: {{ customer.date_joined|date:"d M Y" }}<br>
+                            Last Login: {{ customer.last_login|date:"d M Y H:i"|default:"Never" }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Order Statistics</h6>
+                        <p>
+                            Total Orders: {{ customer.order_set.count }}<br>
+                            Completed Orders: {{ customer.completed_orders }}<br>
+                            Total Spent: ${{ customer.total_spent|floatformat:2 }}
+                        </p>
+                    </div>
+                </div>
+
+                <h6>Recent Orders</h6>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in customer.order_set.all|slice:":5" %}
+                        <tr>
+                            <td>#{{ order.id }}</td>
+                            <td>{{ order.date_ordered|date:"d M Y" }}</td>
+                            <td>{{ order.get_cart_items }}</td>
+                            <td>${{ order.get_cart_total|floatformat:2 }}</td>
+                            {% comment %} <td>
+                                <span class="badge {% if order.complete %}bg-success{% else %}bg-warning{% endif %}">
+                                    {% if order.complete %}Completed{% else %}Pending{% endif %}
+                                </span>
+                            </td> {% endcomment %}
+                            <td>
+                                <span class="badge 
+                                    {% if order.status == 'pending' %}bg-warning text-dark
+                                    {% elif order.status == 'confirmed' %}bg-info text-white
+                                    {% elif order.status == 'shipping' %}bg-primary text-white
+                                    {% elif order.status == 'completed' %}bg-success text-white
+                                    {% elif order.status == 'cancelled' %}bg-danger text-white
+                                    {% else %}bg-secondary text-white{% endif %}">
+                                    {{ order.get_status_display_name }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Customer Modal -->
+{% if not customer.is_superuser %}
+<div class="modal fade" id="deleteCustomerModal{{ customer.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Customer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="customer_id" value="{{ customer.id }}">
+                <div class="modal-body">
+                    <p>Are you sure you want to delete customer "{{ customer.username }}"?</p>
+                    <p class="text-danger"><small>This will also delete all orders associated with this customer. This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}
+
+{% block extra_scripts %}
+<link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+{% endblock %}

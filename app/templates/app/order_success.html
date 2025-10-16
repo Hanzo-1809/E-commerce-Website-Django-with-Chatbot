@@ -1,0 +1,40 @@
+{% extends 'app/navbar.html' %}
+<style>
+    .order-success {
+        text-align: center;
+        margin: 50px auto;
+        padding: 20px;
+        width: 50%;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .order-success h2 {
+        color: #28a745;
+        font-size: 28px;
+    }
+    .order-success p {
+        font-size: 18px;
+        color: #333;
+        margin: 10px 0;
+    }
+    .order-success a {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+    }
+    .order-success a:hover {
+        background: #0056b3;
+    }
+</style>
+
+<div class="order-success">
+    <h2>Đặt hàng thành công!</h2>
+    <p>Đơn hàng của bạn đã được ghi nhận. Chúng tôi sẽ liên hệ với bạn sớm nhất.</p>
+    <a href="{% url 'home' %}">Tiếp tục mua sắm</a>
+</div>

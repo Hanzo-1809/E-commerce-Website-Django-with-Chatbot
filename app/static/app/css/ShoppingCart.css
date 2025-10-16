@@ -299,7 +299,7 @@ main .hero .list-items .item .book-cart-details .book-img {
 }
 main .hero .list-items .item .book-cart-details .book-img img {
   position: absolute;
-  /* width: 100%; */
+  width: 100%;
   object-fit: contain;
   height: 100%;
 }

@@ -21,16 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
       .querySelectorAll(".popup .order-form .list-items .item .cost")
       .forEach((cost) => {
         subtotalCost += parseFloat(
-          cost.textContent.replace("vnd", "").replace(/\./g, "").trim()
+          cost.textContent.replace("$", "").replace(/\./g, "").trim()
         );
       });
 
     const vatcost = subtotalCost * 0.1;
     const totalCost = subtotalCost + vatcost;
 
-    subtotal.textContent = subtotalCost.toLocaleString("vi-VN") + " vnd";
-    vat.textContent = vatcost.toLocaleString("vi-VN") + " vnd";
-    total.textContent = totalCost.toLocaleString("vi-VN") + " vnd";
+    subtotal.textContent = subtotalCost.toLocaleString("vi-VN") + " $";
+    vat.textContent = vatcost.toLocaleString("vi-VN") + " $";
+    total.textContent = totalCost.toLocaleString("vi-VN") + " $";
   }
 
   // Function to handle the cancel button event
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const imgSrc = item.querySelector(".book-img img").src;
             const name = item.querySelector(".details .book-name").textContent;
             const amount = parseInt(item.querySelector(".book-amount .amount").textContent);
-            const cost = parseFloat(item.querySelector(".book-price").textContent.replace("vnd", "").replace(/\./g, "").trim());
+            const cost = parseFloat(item.querySelector(".book-price").textContent.replace("$", "").replace(/,/g, '').trim());
             const newItem = document.createElement("div");
             newItem.classList.add("item");
             const totalCost = cost * amount;
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="name">${name}</div>
                 <div class="amount">x${amount}</div>
             </div>
-            <div class="cost">${totalCost.toLocaleString("vi-VN")} vnd</div>
+            <div class="cost">${totalCost.toLocaleString("vi-VN")} $</div>
           `;
 
             listItem.appendChild(newItem);
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const input = document.createElement("input");
             input.type =
               label.getAttribute("for") === "user-phone" ||
-              label.getAttribute("for") === "zipcode"
+                label.getAttribute("for") === "zipcode"
                 ? "number"
                 : "text";
             input.name = label.getAttribute("for");
@@ -164,4 +164,4 @@ document.addEventListener("DOMContentLoaded", function () {
   if (cancelBtn) {
     cancelBtn.addEventListener("click", closePopup);
   }
-});	
+});

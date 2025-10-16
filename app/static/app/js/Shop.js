@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-});
-document.addEventListener('DOMContentLoaded', function () {
+
+    // Handle filter dropdowns
     const headings = document.querySelectorAll('.hero .section1 .drop-filter-list .heading');
 
     headings.forEach(heading => {
         heading.addEventListener('click', function () {
             const filterList = this.nextElementSibling;
 
-            // Kiểm tra và thay đổi trạng thái hiển thị của filter list
+            // Toggle filter list display
             if (filterList.style.display === "none" || filterList.style.display === "") {
                 filterList.style.display = "flex";
                 this.querySelector('i').classList.remove('ri-arrow-drop-right-line');
@@ -33,19 +33,38 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('.hero .section1 .drop-filter-list .filter-item-list-item');
-
-    buttons.forEach(button => {
+    // Handle category filter buttons
+    const categoryButtons = document.querySelectorAll('.filter-item-list-item[data-category]');
+    categoryButtons.forEach(button => {
         button.addEventListener('click', () => {
-            if(button.classList.contains('active')){
-                button.classList.remove('active');
-            } else{
-                button.classList.add('active');
-            }
+            const category = button.dataset.category;
+            window.location.href = `?category=${category}`;
         });
     });
 });
+
+// Load more functionality
+let page = 1;
+function LoadMore() {
+    page++;
+    fetch(`?page=${page}`)
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newProducts = doc.querySelectorAll('.product-list .card');
+            const productList = document.querySelector('.product-list');
+
+            // Insert new products before the Load More button
+            const loadMoreButton = document.querySelector('.button-container');
+            newProducts.forEach(product => {
+                productList.insertBefore(product, loadMoreButton);
+            });
+
+            // Hide Load More button if no more products
+            if (newProducts.length === 0) {
+                loadMoreButton.style.display = 'none';
+            }
+        });
+}

@@ -11,17 +11,17 @@
     --nomal-font: "poppins";
     --title-font: "Montserrat";
 
-    --color1:#c1121f;
-    --color2:#780000;   
-    --color3:#fdf0d5;
-    --color4:#fbff00;
-    --color5:#dee2e68e;
-    --color6:#d8171a;
-    --color7:#eff6ee;
-    --color8:#6b9080;
-    --white:white;
+    --color1: #c1121f;
+    --color2: #780000;
+    --color3: #fdf0d5;
+    --color4: #fbff00;
+    --color5: #dee2e68e;
+    --color6: #d8171a;
+    --color7: #eff6ee;
+    --color8: #6b9080;
+    --white: white;
     --black: black;
-    --background:#F5F5F5;
+    --background: #F5F5F5;
 }
 
 
@@ -102,7 +102,8 @@ body {
     cursor: pointer;
     font-size: 22px;
 }
-.navigation-bar .icons a{
+
+.navigation-bar .icons a {
     color: var(--black);
     text-decoration: none;
 }
@@ -191,18 +192,20 @@ body {
     font-size: 18px;
 }
 
-.navigation-bar .icons .drop-down-menu button:first-child{
+.navigation-bar .icons .drop-down-menu button:first-child {
     background-color: var(--color1);
 }
-.navigation-bar .icons .drop-down-menu button:first-child a{
+
+.navigation-bar .icons .drop-down-menu button:first-child a {
     color: var(--white);
 }
-.navigation-bar .icons .drop-down-menu button:first-child:hover{
+
+.navigation-bar .icons .drop-down-menu button:first-child:hover {
     transform: scale(1.05);
     background-color: var(--color1);
 }
 
-.navigation-bar .icons .drop-down-menu button:hover{
+.navigation-bar .icons .drop-down-menu button:hover {
     transform: scale(1.05);
     background-color: var(--color3);
 }
@@ -240,7 +243,7 @@ header .items>a:hover {
 
 /* HERO */
 
-.hero{
+.hero {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -248,7 +251,7 @@ header .items>a:hover {
     padding: 3% 0;
 }
 
-.hero .section1{
+.hero .section1 {
     position: relative;
     width: 90%;
     display: flex;
@@ -258,7 +261,7 @@ header .items>a:hover {
     /* overflow: hidden; */
 }
 
-.hero .section1 .drop-filter-list{
+.hero .section1 .drop-filter-list {
     display: flex;
     flex-direction: column;
     width: 22%;
@@ -271,7 +274,7 @@ header .items>a:hover {
     gap: 10px;
 }
 
-.hero .section1 .drop-filter-list .heading{
+.hero .section1 .drop-filter-list .heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -283,14 +286,15 @@ header .items>a:hover {
     cursor: pointer;
 }
 
-.hero .section1 .filter-item-list{
-    display:none;
+.hero .section1 .filter-item-list {
+    display: none;
     flex-direction: column;
     gap: 10px;
 }
-.hero .section1 .drop-filter-list .filter-item-list-item{
+
+.hero .section1 .drop-filter-list .filter-item-list-item {
     border: 2px solid transparent;
-    background:none;
+    background: none;
     text-align: left;
     font-weight: 500;
     opacity: 0.6;
@@ -300,20 +304,20 @@ header .items>a:hover {
     font-size: 12px
 }
 
-.hero .section1 .drop-filter-list .filter-item-list-item:hover{
+.hero .section1 .drop-filter-list .filter-item-list-item:hover {
     opacity: 1;
     background-color: var(--color5);
     box-shadow: 0 0 8px var(--color5);
 }
 
-.hero .section1 .drop-filter-list .filter-item-list-item.active{
+.hero .section1 .drop-filter-list .filter-item-list-item.active {
     background-color: var(--color5);
     opacity: 1;
     font-weight: 600;
     color: var(--black);
 }
 
-.hero .section1 .product-list{
+.hero .section1 .product-list {
     display: flex;
     position: relative;
     background: none;
@@ -321,7 +325,7 @@ header .items>a:hover {
     flex-wrap: wrap;
     justify-content: space-evenly;
     row-gap: 30px;
-    width:80%;
+    width: 80%;
     height: fit-content;
 }
 
@@ -344,7 +348,7 @@ header .items>a:hover {
     padding: 2% 0;
 }
 
-.hero .section1 .product-list .card:hover{
+.hero .section1 .product-list .card:hover {
     transform: scale(1.05);
 }
 
@@ -436,7 +440,7 @@ header .items>a:hover {
     color: var(--color8);
 }
 
-.hero .section1 .product-list .button-container{
+.hero .section1 .product-list .button-container {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -446,7 +450,7 @@ header .items>a:hover {
     margin-top: 20px;
 }
 
-.hero .section1 .product-list .button-container .Load{
+.hero .section1 .product-list .button-container .Load {
     z-index: 1;
     background: var(--color1);
     border: none;
@@ -458,7 +462,8 @@ header .items>a:hover {
     transition: all 0.2s ease;
     cursor: pointer;
 }
-.hero .section1 .product-list .button-container .Load:hover{
+
+.hero .section1 .product-list .button-container .Load:hover {
     transform: scale(1.1);
 }
 
@@ -501,4 +506,12 @@ footer .box a {
 
 footer .box a:hover {
     color: var(--color4)
+}
+
+.no-products {
+    width: 100%;
+    text-align: center;
+    padding: 2rem;
+    color: var(--color8);
+    font-size: 1.2rem;
 }

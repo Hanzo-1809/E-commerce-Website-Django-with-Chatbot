@@ -1,0 +1,370 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'app/css/profile.css' %}">
+    <script src="{% static 'app/js/profile.js' %}"></script>
+    <title>Profile</title>
+</head>
+<body>
+
+    <header>
+        <button onclick="history.back()" class="back-button">
+            <i class="ri-arrow-left-line"></i>
+            <span class="subheading">Profile</span>
+        </button>
+    </header>
+<main>
+    <div class="heading">
+        <div class="back1"></div>
+        <div class="back2">
+             <img src="{% static 'app/images/user.png' %}" alt="User avatar">
+            <button>Choose image</button>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <h5 class="text-center {% if message.tags == 'error' %}text-danger{% else %}text-success{% endif %}">{{ message }}</h5>
+            {% endfor %}
+        {% endif %}
+
+        <div class="user">
+            <div class="username">{{ user.username }}</div>
+            <div class="email">{{ user.email }}</div>
+        </div>
+    </div>
+
+    <div class="sectionbar">
+        <div class="sec active">Account</div>
+        <div class="sec">Orders</div>
+        <i class="ri-edit-box-fill"></i>
+    </div>
+
+    <div class="section-content">
+        <form class="sec active" action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{ user.id }}" name="id">
+
+            <div class="info-box">
+                <label for="firstName">Full Name</label>
+                <input type="text" name="fname" value="{{ user.username }}">
+            </div>
+
+            <div class="info-box">
+                <label for="address">Address</label>
+                <input type="text" name="address" value="{{ user.profile.address }}">
+            </div>
+
+            <div class="info-box">
+                <label for="ward">Ward</label>
+                <input type="text" name="landmark" value="{{ user.profile.landmark }}">
+            </div>
+
+            <div class="info-box">
+                <label for="district">District</label>
+                <input type="text" name="state" value="{{ user.profile.state }}">
+            </div>
+
+            <div class="info-box">
+                <label for="city">City</label>
+                <input type="text" name="city" value="{{ user.profile.city }}">
+            </div>
+
+            <div class="info-box">
+                <label for="pincode">Pincode</label>
+                <input type="text" name="pincode" value="{{ user.profile.pincode }}">
+            </div>
+
+            <div class="info-box">
+                <label for="phone">Phone Number</label>
+                <input type="text" name="phone" value="{{ user.profile.phone }}">
+            </div>
+
+            <div class="info-box">
+                <label for="email">Email</label>
+                <input type="email" name="email" value="{{ user.email }}">
+            </div>
+
+            <div class="info-box">
+                <label for="password">Password</label>
+                <input type="password" name="user.password1">
+            </div>
+
+            <div class="submitBtn">
+                <button type="reset">Cancel</button>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+        <div class="sec">
+            {% if orders %}
+                {% for order_info in orders %}
+                <div class="item">
+                    <div class="head">
+                        <div class="cell">
+                            <div class="title">Order number</div>
+                            <div class="value">#{{ order_info.order.id }}</div>
+                        </div>
+                        <div class="cell">
+                            <div class="title">Status</div>
+                            <div class="value status-badge status-{{ order_info.status }}">
+                                {% if order_info.status == 'pending' %}
+                                    Chờ xác nhận
+                                {% elif order_info.status == 'confirmed' %}
+                                    Đã xác nhận
+                                {% elif order_info.status == 'shipping' %}
+                                    Đang giao
+                                {% elif order_info.status == 'completed' %}
+                                    Hoàn thành
+                                {% elif order_info.status == 'cancelled' %}
+                                    Đã hủy
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="title">Total Items</div>
+                            <div class="value">{{ order_info.total_items }}</div>
+                        </div>
+                        <div class="cell">
+                            <div class="title">Date</div>
+                            <div class="value">{{ order_info.date|date:"d M Y" }}</div>
+                        </div>
+                        <div class="cell">
+                            <div class="title">Total cost</div>
+                            <div class="value">${{ order_info.order.get_cart_total|floatformat:2 }}</div>
+                        </div>
+                        <div class="cell">
+                            <button class="view-order">View Order</button>
+                            <div class="popupOrder">
+                                <form class="order-form">
+                                    {% csrf_token %}
+                                    <div class="heading">ORDER #{{ order_info.order.id }}</div>
+                                    <div class="Information">
+                                        <div class="subheading">
+                                            <div>Information</div>
+                                            <div><i class="ri-close-fill"></i></div>
+                                        </div>
+                                        {% if order_info.shipping %}
+                                        <div class="user-info">
+                                            <div class="input-box user-name">
+                                                <label>Receiver's name:</label>
+                                                <label>{{ user.username }}</label>
+                                            </div>
+                                            <div class="input-box user-phone">
+                                                <label>Phone:</label>
+                                                <label>{{ order_info.shipping.mobile }}</label>
+                                            </div>
+                                            <div class="input-box address">
+                                                <label>Address:</label>
+                                                <label>{{ order_info.shipping.address }}</label>
+                                            </div>
+                                            <div class="input-box city">
+                                                <label>City:</label>
+                                                <label>{{ order_info.shipping.city }}</label>
+                                            </div>
+                                            <div class="input-box state">
+                                                <label>State:</label>
+                                                <label>{{ order_info.shipping.state }}</label>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="subheading">Your orders:</div>
+                                    <div class="list-items">
+                                        {% for item in order_info.items %}
+                                        <div class="item">
+                                            <div class="image">
+                                                <img src="{{ item.product.ImageURL }}" alt="{{ item.product.name }}">
+                                            </div>
+                                            <div class="details">
+                                                <div class="name">{{ item.product.name }}</div>
+                                                <div class="amount">x{{ item.quantity }}</div>
+                                            </div>
+                                            <div class="cost">${{ item.get_total|floatformat:2 }}</div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="payments">
+                                        <div class="totals">
+                                            <div class="subtotal">
+                                                <label>Sub Total:</label>
+                                                <label>${{ order_info.order.get_cart_total|floatformat:2 }}</label>
+                                            </div>
+                                            <div class="total">
+                                                <label>Total:</label>
+                                                <label>${{ order_info.order.get_cart_total|floatformat:2 }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} <div class="book">
+                        <div class="book-image"><img src="../resource/img/4.png" alt=""></div>
+                        <div class="book-details">
+                            <div class="name-amount-cost">
+                                <div class="name-amount">
+                                    <div class="name">The way to success</div>
+                                    <div class="amount">x1</div>
+                                </div>
+                                <div class="cost">150.000vnd</div>
+                            </div>
+                            <div class="decription">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                Laboriosam dolorem totam fugiat error quos cumque voluptatum esse tenetur quod ab
+                                magnam eveniet consequuntur, sit aperiam rerum aliquam veritatis nostrum odit!</div>
+                            <div class="actionBtn">
+                                <a href="#">View product</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book">
+                        <div class="book-image"><img src="../resource/img/4.png" alt=""></div>
+                        <div class="book-details">
+                            <div class="name-amount-cost">
+                                <div class="name-amount">
+                                    <div class="name">The way to success</div>
+                                    <div class="amount">x1</div>
+                                </div>
+                                <div class="cost">150.000vnd</div>
+                            </div>
+                            <div class="decription">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                Laboriosam dolorem totam fugiat error quos cumque voluptatum esse tenetur quod ab
+                                magnam eveniet consequuntur, sit aperiam rerum aliquam veritatis nostrum odit!</div>
+                            <div class="actionBtn">
+                                <a href="#">View product</a>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-orders">
+                    <p>You haven't placed any orders yet.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+</body>
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/e962eb835c.js" crossorigin="anonymous"></script>
+
+<style>
+/* Status Styles - More elegant and simple */
+.value.status-badge {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status-pending {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.status-confirmed {
+    color: #0c5460;
+    background-color: #d1ecf1;
+}
+
+.status-shipping {
+    color: #004085;
+    background-color: #cce5ff;
+}
+
+.status-completed {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.status-cancelled {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+/* Improve Order Items Display */
+.list-items .item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.list-items .item:last-child {
+    border-bottom: none;
+}
+
+.list-items .item .image {
+    width: 80px;
+    height: 80px;
+    margin-right: 1rem;
+}
+
+.list-items .item .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.list-items .item .details {
+    flex: 1;
+}
+
+.list-items .item .details .name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.list-items .item .cost {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+/* No Orders Message */
+.no-orders {
+    text-align: center;
+    padding: 2rem;
+    color:rgb(12, 13, 13);
+    font-style: italic;
+}
+
+/* Order Cell Styles */
+.cell {
+    margin-bottom: 10px;
+}
+
+.cell .title {
+    font-size: 12px;
+    color:rgb(0, 0, 0);
+    margin-bottom: 4px;
+}
+
+.cell .value {
+    font-size: 14px;
+    color: #212529;
+    font-weight: 500;
+}
+
+/* View Order Button */
+.view-order {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.view-order:hover {
+    background-color: #0056b3;
+}
+</style>
+</html>

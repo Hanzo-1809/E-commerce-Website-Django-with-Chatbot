@@ -1,206 +1,334 @@
 {% load static %}
-{% include 'app/navbar.html' %}
+{% include "app/navbar.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<link rel="stylesheet" href="{% static 'app/css/ProductPage.css' %}">
-<script src="{% static 'app/js/ProductPage.js'%}"></script>
-<script src="{% static 'app/js/cart.js'%}"></script>
-<script src="{% static 'app/js/myscript.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'app/css/ProductPage.css' %}">
+    <script src="{% static 'app/js/ProductPage.js' %}"></script>
+    <script src="{% static 'app/js/cart.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>
+    <style>
+/* CSS cho phần Related Books */
+.related-books {
+    margin-top: 30px;
+    padding: 20px 0;
+}
 
+.related-books .heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
 
+/* Container cho danh sách sách */
+.related-books .books-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Styling cho mỗi thẻ a chứa sách */
+.related-books .books {
+    flex: 1 0 calc(25% - 20px);
+    min-width: 200px;
+    max-width: 300px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+.related-books .books:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Cấu trúc mỗi sách */
+.related-books .book {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Phần hình ảnh - kích thước cố định */
+.related-books .book-img {
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.related-books .book-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.related-books .books:hover .book-img img {
+    transform: scale(1.05);
+}
+
+/* Phần thông tin sách */
+.related-books .book-info {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px;
+}
+
+/* Tên sách - tự động xuống dòng */
+.related-books .book-name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;  /* Giới hạn 3 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    max-height: calc(1.4em * 3); /* tương ứng với 3 dòng */
+}
+
+/* Tác giả - tự động xuống dòng */
+.related-books .book-author {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Giá sách */
+.related-books .book-cost {
+    color: #e74c3c;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+
+/* Đánh giá sao */
+.related-books .book-rating {
+    margin-top: auto;
+    color: #f39c12;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 992px) {
+    .related-books .books {
+        flex: 1 0 calc(33.333% - 20px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .related-books .books {
+        flex: 1 0 calc(50% - 20px);
+    }
+    
+    .related-books .book-img {
+        height: 180px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .related-books .books {
+        flex: 1 0 calc(100% - 20px);
+    }
+    
+    .related-books .book-img {
+        height: 160px;
+    }
+    
+    .related-books .book-info {
+        padding: 10px;
+    }
+}
+    </style>
 </head>
-
 <body>
-	
-	<main>
-		
-		<div class="product">
-			{% for product in products %}
-			<div class="section1">
-				<div class="image-section">
-					<div class="img-show">
-						<img src="{% static 'app/images/4.png' %}" >
-					</div>
-					<div class="img-list">
-						<button class="prev-btn">
-							<i class="ri-arrow-drop-up-line"></i>
-						</button>
-						<div class="list">
-							<img src="{{ product.ImageURL }}" alt="">
-							<img src="{{ product.ImageURL }}" alt="">
-							<img src="{{ product.ImageURL }}" alt="">
-							<img src="{{ product.ImageURL }}" alt="">
-							<img src="{{ product.ImageURL }}" alt="">
-						</div>
-						<button class="next-btn">
-							<i class="ri-arrow-drop-down-line"></i>
-						</button>
-					</div>
-				</div>
-				<div class="product-info">
-					<div class="book-title">{{ product.name }}</div>
-					<div class="book-author">{{ product.author }}</div>
-					<div class="book-cost">
-						<div class="cost">{{ product.price }}</div>
-					</div>
-					<div class="rates">
-						<div class="star">
-							<i class="ri-star-fill"></i>
-							<i class="ri-star-fill"></i>
-							<i class="ri-star-fill"></i>
-							<i class="ri-star-fill"></i>
-							<i class="ri-star-half-line"></i>
-						</div>
-						<div class="rate">120,212 votes</div>
-					</div>
-					<div class="description"></div>
-					<div class="buy-info">
-						<div class="input">
-							<button class="minus">-</button>
-							<label class="amount">1</label>
-							<button class="plus">+</button>
-						</div>
-						<div class="btn">
-							<button class="update-cart" data-product={{product.id}} data-action = "add" >Add Cart</button>
-							<button >Buy Now</button>
-						</div>
-					</div>
-					<div class="addition-description">
-						<div class="categories">
-							<div class="tag">Categories:</div>
-							<div class="list-tag">{{ product.category }}</div>
-						</div>
-						<div class="share-product">
-							Share this product 
-							<a href="#"><i class="fa-brands fa-facebook" style="color: blue;"></i></a>
-							<a href="#"><i class="fa-brands fa-instagram" style="color: orangered;"></i></a>
-							<a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-			<div class="comment-section">
-				<div class="heading">
-					<div class="title">Community Reviews</div>
-					<div class="rates">
-						<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-							class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-							class="ri-star-half-line"></i>
-					</div>
-					<div class="vote">12 532 votes</div>
-				</div>
+    <main>
+        <div class="product">
+            <div class="section1">
+                <div class="image-section">
+                    <div class="img-show">
+                        <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="img-list">
+                        <button class="prev-btn">
+                            <i class="ri-arrow-drop-up-line"></i>
+                        </button>Share this product
+                        <div class="list">
+                            <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                            <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                            <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                            <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                        </div>
+                        <button class="next-btn">
+                            <i class="ri-arrow-drop-down-line"></i>
+                        </button>
+                    </div>
+                </div>
 
-				<div class="review-box">
-					<div class="reviewer-img">
-						<img src="{% static 'app/images/banner4.png' %}" alt="" srcset="">
-					</div>
-					<div class="review-main">
-						<div class="heading-review">
-							<div class="sub-heading">
-								<div class="nam">Eugene Scheneider</div>
-								<div class="rate">
-									<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-										class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-										class="ri-star-half-line"></i>
-								</div>
-							</div>
-							<div class="review-time">Feb 27, 2013</div>
-						</div>
-						<div class="review-content">Lorem ipsum dolor, sit amet
-							consectetur adipisicing elit. Deserunt ad numquam perspiciatis
-							reiciendis obcaecati minus veritatis nesciunt beatae deleniti
-							dicta. Magni asperiores porro eaque eveniet earum aperiam, vero
-							fugiat mollitia. Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Dignissimos, odio quia aperiam ex nemo delectus
-							soluta totam eum quos fuga autem numquam mollitia natus? Iusto
-							doloribus rerum id autem. Quis! Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Doloribus praesentium sint voluptas
-							inventore voluptatibus alias incidunt, aut, nihil maxime tempore
-							hic sequi blanditiis ducimus numquam ab cupiditate autem.
-							Voluptatibus, ipsum?</div>
-					</div>
-				</div>
-				<div class="review-box">
-					<div class="reviewer-img">
-						<img src="img/customer2.jpg" alt="" srcset="">
-					</div>
-					<div class="review-main">
-						<div class="heading-review">
-							<div class="sub-heading">
-								<div class="nam">Eugene Scheneider</div>
-								<div class="rate">
-									<i class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-										class="ri-star-fill"></i> <i class="ri-star-fill"></i> <i
-										class="ri-star-half-line"></i>
-								</div>
-							</div>
-							<div class="review-time">Feb 27, 2013</div>
-						</div>
-						<div class="review-content">Lorem ipsum dolor, sit amet
-							consectetur adipisicing elit. Deserunt ad numquam perspiciatis
-							reiciendis obcaecati minus veritatis nesciunt beatae deleniti
-							dicta. Magni asperiores porro eaque eveniet earum aperiam, vero
-							fugiat mollitia. Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Dignissimos, odio quia aperiam ex nemo delectus
-							soluta totam eum quos fuga autem numquam mollitia natus? Iusto
-							doloribus rerum id autem. Quis! Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Doloribus praesentium sint voluptas
-							inventore voluptatibus alias incidunt, aut, nihil maxime tempore
-							hic sequi blanditiis ducimus numquam ab cupiditate autem.
-							Voluptatibus, ipsum?</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="related-books">
-			<div class="heading">Related books</div>
-			<a href="#" class="books">
-				<div class="book">
-					<div class="book-img">
-						<img src="img/2.png" alt="">
-					</div>
-					<div class="book-info">
-						<div class="book-name">The Young Wizard</div>
-						<div class="book-author">Aarong Loeb</div>
-						<div class="book-cost">105.000 vnd</div>
-					</div>
-				</div>
-			</a> <a href="#" class="books">
-				<div class="book">
-					<div class="book-img">
-						<img src="img/2.png" alt="">
-					</div>
-					<div class="book-info">
-						<div class="book-name">The Young Wizard</div>
-						<div class="book-author">Aarong Loeb</div>
-						<div class="book-cost">105.000 vnd</div>
-					</div>
-				</div>
-			</a> <a href="#" class="books">
-				<div class="book">
-					<div class="book-img">
-						<img src="img/2.png" alt="">
-					</div>
-					<div class="book-info">
-						<div class="book-name">The Young Wizard</div>
-						<div class="book-author">Aarong Loeb</div>
-						<div class="book-cost">105.000 vnd</div>
-					</div>
-				</div>
-			</a>
-		</div>
-	</main>
+                <div class="product-info">
+                    <div class="book-title">{{ product.name }}</div>
+                    <div class="book-author">{{ product.author }}</div>
+                    <div class="book-cost">
+                        <div class="cost">{{ product.price }} $</div>
+                    </div>
+                    <div class="rates">
+                        <div class="star">
+                            {% for i in "12345" %}
+                                <i class="ri-star{% if product.average_rating < forloop.counter %}-line{% else %}-fill{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                        <div class="rate">{{ product.total_reviews }} đánh giá</div>
+                    </div>
+                     <div class="description">Khám phá cuốn sách đầy cảm hứng – "{{ product.name }}" .
+                    lối hành văn lôi cuốn cùng kiến thức bổ ích . 
+                    Với nội dung được biên soạn kỹ lưỡng và thiết kế hiện đại, 
+                    cuốn sách này chắc chắn sẽ là người bạn đồng hành lý tưởng trên hành trình phát triển bản thân .</div>
+                    <div class="buy-info">
+                        <div class="input">
+                            <button class="minus">-</button>
+                            <label class="amount">1</label>
+                            <button class="plus">+</button>
+                        </div>
+                        <div class="btn">
+                            <button class="update-cart" data-product="{{ product.id }}" data-action="add">Add Cart</button>
+                            <button>Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="addition-description">
+                        <div class="categories">
+                            <div class="tag">Categories:</div>
+                            <div class="list-tag">
+                                {% for category in product.category.all %}
+                                    {{ category.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="share-product">
+                            Share this product 
+                            <a href="#"><i class="fa-brands fa-facebook" style="color: blue;"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram" style="color: orangered;"></i></a>
+                            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-section">
+                <div class="heading">
+                    <div class="title">Community Reviews</div>
+                    <div class="rates">
+                        {% for i in "12345" %}
+                            <i class="ri-star{% if product.average_rating < forloop.counter %}-line{% else %}-fill{% endif %}"></i>
+                        {% endfor %}
+                    </div>
+                    <div class="vote">{{ product.total_reviews }} đánh giá</div>
+                </div>
+
+                {% if user.is_authenticated and can_review %}
+                    <div class="review-form">
+                        <h4>Write your review</h4>
+                        <form method="POST" action="{% url 'add_review' product.id %}">
+                            {% csrf_token %}
+                            <div class="rating-select">
+                                <div class="rate-title">Choose your rating:</div>
+                                <div class="stars">
+                                    <input type="radio" name="rating" value="5" id="star5" required>
+                                    <label for="star5"><i class="ri-star-fill"></i></label>
+                                    
+                                    <input type="radio" name="rating" value="4" id="star4" required>
+                                    <label for="star4"><i class="ri-star-fill"></i></label>
+                                    
+                                    <input type="radio" name="rating" value="3" id="star3" required>
+                                    <label for="star3"><i class="ri-star-fill"></i></label>
+                                    
+                                    <input type="radio" name="rating" value="2" id="star2" required>
+                                    <label for="star2"><i class="ri-star-fill"></i></label>
+                                    
+                                    <input type="radio" name="rating" value="1" id="star1" required>
+                                    <label for="star1"><i class="ri-star-fill"></i></label>
+                                </div>
+                            </div>
+                            <textarea name="comment" rows="4" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm..." required></textarea>
+                            <button type="submit" class="submit-review">Post review</button>
+                        </form>
+                    </div>
+                {% endif %}
+
+                <div class="reviews-list">
+                    {% for review in product.reviews.all %}
+                    <div class="review-box">
+                        <div class="reviewer-img">
+                            <img src="{% static 'app/images/user.png' %}" alt="{{ review.user.username }}">
+                        </div>
+                        <div class="review-main">
+                            <div class="heading-review">
+                                <div class="sub-heading">
+                                    <div class="name">{{ review.user.username }}</div>
+                                    <div class="rate">
+                                        {% for i in "12345" %}
+                                            <i class="ri-star{% if review.rating < forloop.counter %}-line{% else %}-fill{% endif %}"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="review-time">{{ review.created_at|date:"d/m/Y" }}</div>
+                            </div>
+                            <div class="review-content">{{ review.comment }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="related-books">
+            <div class="heading">Related books</div>
+            
+            {% if related_books %}
+                    {% for book in related_books %}
+                        <a href="{% url 'detail' %}?id={{book.id}}" class="books">
+                            <div class="book">
+                                <div class="book-img">
+                                    <img src="{{ book.ImageURL }}" alt="{{ book.name }}">
+                                </div>
+                                <div class="book-info">
+                                    <div class="book-name">{{ book.name|truncatewords:3 }}</div>
+                                    <div class="book-author">{{ book.author|default:"Unknown" }}</div>
+                                    <div class="book-cost">{{ book.price }} $</div>
+                                    <div class="book-rating">
+                                        {% for i in "12345" %}
+                                            <i class="ri-star{% if book.average_rating < forloop.counter %}-line{% else %}-fill{% endif %}"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+            {% else %}
+                <div class="no-related-books">
+                    <p>Không tìm thấy sách liên quan.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
 </body>
-<link
-	href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-	rel="stylesheet" />
-<script src="https://kit.fontawesome.com/e962eb835c.js"
-	crossorigin="anonymous"></script>
-
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/e962eb835c.js" crossorigin="anonymous"></script>
 </html>

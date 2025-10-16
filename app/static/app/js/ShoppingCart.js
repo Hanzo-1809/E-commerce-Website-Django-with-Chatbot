@@ -19,54 +19,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Amount change
 document.addEventListener("DOMContentLoaded", function () {
-  var updateBtns = document.getElementsByClassName('update-cart')
+  const minusButtons = document.querySelectorAll(".minus");
+  const plusButtons = document.querySelectorAll(".add");
+  const amounts = document.querySelectorAll(".amount");
 
-for (var i = 0; i < updateBtns.length; i++) {
-    updateBtns[i].addEventListener('click', function(){
-        var productId = this.dataset.product
-        var action = this.dataset.action
-        console.log('productId:', productId, 'Action:', action)
-        console.log('USER:', user)
-        if (user === 'AnonymousUser'){
-            console.log('User is not authenticated')
-        }
-        else{
-            console.log('User logged in')
-        }
+  minusButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      const currentAmount = parseInt(amounts[index].textContent, 10);
+      if (currentAmount > 1) {
+        amounts[index].textContent = currentAmount - 1;
+      }
+    });
+  });
 
-        console.log('USER:', user)
-        if (user === 'AnonymousUser'){
-            console.log('User is not authenticated')
-        }else{
-            updateUserOrder(productId, action)
-        }
-    })
-}
-
-function updateUserOrder(productId, action){
-    console.log('User is authenticated, sending data...')
-
-    var url = '/update_item/'
-
-    fetch(url, {
-        method: 'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'X-CSRFToken': csrftoken,
-        },
-        body: JSON.stringify({'productId': productId, 'action': action})
-    })
-
-    .then((response) => {
-        return response.json()
-    })
-
-    .then((data) => {
-        console.log('data:', data)
-        location.reload()
-    })
-}
+  plusButtons.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      const currentAmount = parseInt(amounts[index].textContent, 10);
+      amounts[index].textContent = currentAmount + 1;
+    });
+  });
 });
 
 // Delete btn
@@ -108,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const amount = parseInt(item.querySelector(".amount").textContent, 10);
         totalItems += amount; // Update totalItems count
         const price = parseFloat(
-          item.querySelector(".book-price").textContent.replace(/[^0-9-]/g, "")
+          item.querySelector(".book-price").textContent.replace(/[^\d.-]/g, '')
         );
         return acc + amount * price;
       }
@@ -116,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 0);
     document.querySelector(".total-item .Total-num").textContent = totalItems;
     document.querySelector(".total-cost .cost").textContent =
-      totalCost.toLocaleString("vi-VN") + " vnd";
+      totalCost.toLocaleString("vi-VN") + " $";
 
     // Add new items to order summary
     const orderSummaryList = document.querySelector(".total-item");
@@ -167,13 +140,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    // document.querySelectorAll("main .hero .details .buy-btn button").forEach((button) => {
-    //   button.addEventListener('click', () => {
-    //     var popup = document.querySelector(".popup");
-    //     if (popup) {
-    //       popup.classList.add("active");
-    //     }
-    //   });
-    // });
+  // document.querySelectorAll("main .hero .details .buy-btn button").forEach((button) => {
+  //   button.addEventListener('click', () => {
+  //     var popup = document.querySelector(".popup");
+  //     if (popup) {
+  //       popup.classList.add("active");
+  //     }
+  //   });
+  // });
 
 });
+

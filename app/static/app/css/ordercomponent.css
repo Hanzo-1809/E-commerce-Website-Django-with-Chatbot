@@ -39,7 +39,7 @@
 
 .popup.active {
   position: fixed;
-  display: center;
+  display: block ;
   align-items: center;
   width: 100%;
   height: 100%;

@@ -8,37 +8,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JBOOK</title>
     <link rel="stylesheet" href="{% static 'app/css/navbar.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'app/css/Shop.css' %}">
 </head>
 
 <body>
-  <main class = "hero" >
-  <div class = "section1" >
-    <div class="slider-wrapper-item">
-        {% for product in products %}
-          <div class="card">
-            <a href="" class="img-box">
-              <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
-            </a>
-            <a href="" class="book-title">{{ product.name }}</a>
-            <div class="book-cost">
-              <div class="cost">{{ product.price|floatformat:2 }}</div>
-            </div>
-            <div class="sold">
-              <p>Sold:</p>
-              <p>{{ product.sold }}</p>
-              <div class="rates">
-                <div class="star">
-                  {% for i in "12345" %}
-                    <i class="ri-star{% if product.rating < i %}-half-line{% else %}-fill{% endif %}"></i>
-                  {% endfor %}
+    <main class="hero">
+        <div class="section1">
+            <div class="drop-filter-list">
+                <div class="drop-filter-item">
+                    <div class="heading">
+                        <div>Category</div>
+                        <i class="ri-arrow-drop-right-line"></i>
+                    </div>
+                    <div class="filter-item-list">
+                        <button class="filter-item-list-item {% if not active_category %}active{% endif %}" 
+                                data-category="">
+                            All Categories
+                        </button>
+                        {% for category in categories %}
+                        <button class="filter-item-list-item {% if active_category == category.slug %}active{% endif %}" 
+                                data-category="{{ category.slug }}">
+                            {{ category.name }}
+                        </button>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="rate">{{ product.votes }} votes</div>
-              </div>
+              
+                {% comment %} <div class="drop-filter-item">
+                    <div class="heading">
+                        <div>Cost</div>
+                        <i class="ri-arrow-drop-right-line"></i>
+                    </div>
+                    <div class="filter-item-list">
+                        <button class="filter-item-list-item">0 - 100.000 vnd</button>
+                        <button class="filter-item-list-item">100.000 - 500.000 vnd</button>
+                        <button class="filter-item-list-item">500.000 - 1.000.000 vnd</button>
+                        <button class="filter-item-list-item">>1.000.000</button>
+                    </div>
+                </div> {% endcomment %}
             </div>
-          </div>
-        {% endfor %}
-      </div>
+            <div class="product-list">
+                {% if products %}
+                    {% for product in products %}
+                    <a href="{% url 'detail' product.id %}" class="card">
+                        <div class="img-box">
+                            <img src="{{ product.ImageURL }}" alt="{{ product.name }}">
+                        </div>
+                        <div class="book-title">{{ product.name }}</div>
+                        <div class="book-cost">
+                            <div class="cost">{{ product.price|floatformat:2 }} vnd</div>
+                            {% if product.old_price %}
+                            <div class="old-cost">{{ product.old_price|floatformat:2 }} vnd</div>
+                            {% endif %}
+                        </div>
+                        <div class="sold">
+                            <p>Sold: {{ product.sold|default:"0" }}</p>
+                            <div class="rates">
+                                <div class="star">
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-half-line"></i>
+                                </div>
+                                <div class="rate">{{ product.votes|default:"0" }} votes</div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% if products.count >= 12 %}
+                    <div class="button-container">
+                        <button class="Load" onclick="LoadMore()">Load More</button>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <div class="no-products">
+                        <p>No products found in this category.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <!-- Debug info -->
+    <div style="display: none;">
+        <p>Active category: {{ active_category }}</p>
+        <p>Number of products: {{ products.count }}</p>
+        <p>Products: {{ products }}</p>
     </div>
-  </main>
 </body>
+<script src="{% static 'app/js/shop.js' %}"></script>
 </html>

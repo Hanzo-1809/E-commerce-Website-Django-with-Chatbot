@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test JBook DeepSeek Chatbot</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 { color: #333; }
+    .debug-panel {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .chat-container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #ff4d4d;
+      color: white;
+      padding: 10px 15px;
+      font-weight: bold;
+    }
+    .chat-messages {
+      padding: 15px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+    .chat-input button {
+      padding: 10px 20px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+    .user-message {
+      background-color: #ff4d4d;
+      color: white;
+      margin-left: auto;
+    }
+    .bot-message {
+      background-color: #f0f0f0;
+    }
+    .info { color: #3498db; }
+    .error { color: #e74c3c; }
+    .success { color: #2ecc71; }
+  </style>
+</head>
+<body>
+  <h1>Test DeepSeek Chatbot</h1>
+  
+  <div class="debug-panel" id="debug-panel">
+    <p>Debug logs will appear here...</p>
+  </div>
+  
+  <div class="chat-container">
+    <div class="chat-header">JBook Chatbot</div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="chat-input" placeholder="Nhập câu hỏi của bạn...">
+      <button id="send-button">Gửi</button>
+    </div>
+  </div>
+  
+  <h2>Kiểm tra kết nối API trực tiếp</h2>
+  <p>
+    <button id="test-api">Test DeepSeek API</button>
+    <span id="api-result"></span>
+  </p>
+  
+  <script>
+    // Debug function
+    function log(message, type = 'info') {
+      const debugPanel = document.getElementById('debug-panel');
+      const logEntry = document.createElement('div');
+      logEntry.classList.add(type);
+      logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      debugPanel.appendChild(logEntry);
+      debugPanel.scrollTop = debugPanel.scrollHeight;
+    }
+    
+    // Add a message to the chat
+    function addMessage(text, isUser) {
+      const messagesContainer = document.getElementById('chat-messages');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+      messageElement.textContent = text;
+      messagesContainer.appendChild(messageElement);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Send a message to the chatbot
+    async function sendMessage(message) {
+      try {
+        log(`Sending message: "${message}"`);
+        
+        // Add user message to chat
+        addMessage(message, true);
+        
+        const response = await fetch('/chat/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        });
+        
+        log(`Response status: ${response.status}`);
+        
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        log(`Response data: ${JSON.stringify(data)}`, 'success');
+        
+        // Add bot message to chat
+        if (data.reply) {
+          addMessage(data.reply, false);
+        } else {
+          throw new Error('No reply in response');
+        }
+      } catch (error) {
+        log(`Error: ${error.message}`, 'error');
+        addMessage('Xin lỗi, đã xảy ra lỗi khi gửi tin nhắn.', false);
+      }
+    }
+    
+    // Test API connection directly
+    async function testApiConnection() {
+      try {
+        const testMessage = "Xin chào, bạn có thể giới thiệu về cửa hàng không?";
+        log(`Testing API with message: "${testMessage}"`);
+        
+        document.getElementById('api-result').textContent = 'Testing...';
+        
+        const response = await fetch('/chat/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: testMessage })
+        });
+        
+        log(`API test response status: ${response.status}`);
+        
+        const data = await response.json();
+        log(`API test response: ${JSON.stringify(data)}`, 'success');
+        
+        document.getElementById('api-result').textContent = '✓ API đang hoạt động!';
+        document.getElementById('api-result').style.color = '#2ecc71';
+      } catch (error) {
+        log(`API test error: ${error.message}`, 'error');
+        document.getElementById('api-result').textContent = '✗ Lỗi API!';
+        document.getElementById('api-result').style.color = '#e74c3c';
+      }
+    }
+    
+    // Event listeners
+    document.getElementById('send-button').addEventListener('click', () => {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      
+      if (message) {
+        sendMessage(message);
+        input.value = '';
+      }
+    });
+    
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('send-button').click();
+      }
+    });
+    
+    document.getElementById('test-api').addEventListener('click', testApiConnection);
+    
+    // Add initial greeting
+    addMessage('Xin chào! Tôi là chatbot JBook. Bạn cần giúp gì?', false);
+  </script>
+</body>
+</html>

@@ -99,6 +99,7 @@ body {
   cursor: pointer;
   font-size: 22px;
 }
+
 .navigation-bar .icons a {
   color: var(--black);
   text-decoration: none;
@@ -178,21 +179,12 @@ body {
   background-color: var(--gray);
 }
 
-.navigation-bar
-  .icons
-  .drop-down-menu
-  .drop-list-item:not(:first-child)
-  .icon
-  i {
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) .icon i {
   color: var(--black);
   z-index: 1;
 }
 
-.navigation-bar
-  .icons
-  .drop-down-menu
-  .drop-list-item:not(:first-child)
-  .item-content {
+.navigation-bar .icons .drop-down-menu .drop-list-item:not(:first-child) .item-content {
   padding: 5px 0 4px 0;
   font-size: 18px;
 }
@@ -208,7 +200,7 @@ header .items {
   padding: 8px;
 }
 
-header .items > a {
+header .items>a {
   text-decoration: none;
   font-family: var(--nomal-font);
   font-size: 18px;
@@ -219,12 +211,12 @@ header .items > a {
   border: 2px transparent solid;
 }
 
-header .items > a.active {
+header .items>a.active {
   pointer-events: none;
   color: var(--white);
 }
 
-header .items > a:hover {
+header .items>a:hover {
   color: var(--white);
 }
 
@@ -238,11 +230,13 @@ main {
   gap: 10px;
   align-self: center;
 }
+
 main .product {
   display: flex;
   flex-direction: column;
   flex: 4;
 }
+
 main .product .section1 {
   display: flex;
   flex-direction: row;
@@ -275,6 +269,7 @@ main .product .section1 .image-section .img-show img {
   position: absolute;
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 main .product .section1 .image-section .img-list {
@@ -304,11 +299,13 @@ main .product .section1 .image-section button {
   font-weight: 700;
   z-index: 1;
 }
+
 main .product .section1 .image-section .prev-btn {
   transform: translateX(-50%) translateY(-65%);
   left: 50%;
   top: 0;
 }
+
 main .product .section1 .image-section .next-btn {
   transform: translateX(-50%) translateY(-35%);
   top: 100%;
@@ -324,9 +321,11 @@ main .product .section1 .image-section .list {
   justify-content: flex-start;
   height: 100%;
 }
+
 main .product .section1 .image-section .list::-webkit-scrollbar {
   display: none;
 }
+
 main .product .section1 .image-section .list img {
   width: 100%;
   height: 100%;
@@ -339,20 +338,24 @@ main .product .section1 .product-info {
   min-width: 50%;
   height: 100%;
 }
+
 main .product .section1 .product-info .book-title {
   font-weight: 500;
   font-size: 23px;
   color: var(--black);
 }
+
 main .product .section1 .product-info .book-author {
   font-size: 14px;
   color: var(--color4);
 }
+
 main .product .section1 .product-info .book-cost .cost {
   color: var(--color1);
   font-weight: 700;
   font-size: 18px;
 }
+
 main .product .section1 .product-info .book-cost .old-cost {
   color: var(--color4);
   font-weight: 700;
@@ -382,6 +385,7 @@ main .product .section1 .product-info .rates .rate {
   align-items: center;
   opacity: 0.7;
 }
+
 main .product .section1 .product-info .description {
   font-size: 14px;
   text-align: justify;
@@ -392,12 +396,14 @@ main .product .section1 .product-info .description {
 main .product .section1 .product-info .buy-info {
   display: block;
 }
+
 main .product .section1 .product-info .buy-info .input {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
+
 main .product .section1 .product-info .buy-info .input button {
   font-size: 15px;
   font-weight: 600;
@@ -407,6 +413,7 @@ main .product .section1 .product-info .buy-info .input button {
   background: none;
   border-radius: 10px;
 }
+
 main .product .section1 .product-info .buy-info .input button:last-child {
   background: var(--black);
   color: var(--white);
@@ -419,6 +426,7 @@ main .product .section1 .product-info .buy-info .input .amount {
   outline: none;
   font-weight: 600;
 }
+
 main .product .section1 .product-info .buy-info .btn {
   max-width: 50%;
   display: flex;
@@ -427,6 +435,7 @@ main .product .section1 .product-info .buy-info .btn {
   margin-top: 5px;
   gap: 10px;
 }
+
 main .product .section1 .product-info .buy-info .btn button {
   white-space: nowrap;
   border-radius: 10px;
@@ -442,6 +451,7 @@ main .product .section1 .product-info .buy-info .btn button {
 main .product .section1 .product-info .buy-info .btn button:hover {
   transform: scale(1.05);
 }
+
 main .product .section1 .product-info .buy-info .btn button:first-child {
   background: none;
   border-color: var(--black);
@@ -452,12 +462,14 @@ main .product .section1 .product-info .buy-info .btn button:first-child {
 main .product .section1 .product-info .addition-description {
   display: block;
 }
+
 main .product .section1 .product-info .addition-description .categories {
   display: flex;
   flex-direction: row;
   padding-top: 5px;
   gap: 3px;
 }
+
 main .product .section1 .product-info .addition-description .categories .tag {
   display: flex;
   align-items: center;
@@ -466,19 +478,15 @@ main .product .section1 .product-info .addition-description .categories .tag {
   font-size: 11px;
   opacity: 0.7;
 }
-main
-  .product
-  .section1
-  .product-info
-  .addition-description
-  .categories
-  .list-tag {
+
+main .product .section1 .product-info .addition-description .categories .list-tag {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
   font-size: 11px;
 }
+
 main .product .section1 .product-info .addition-description .share-product {
   display: flex;
   flex-direction: row;
@@ -489,9 +497,11 @@ main .product .section1 .product-info .addition-description .share-product {
   align-items: center;
   color: var(--color8);
 }
+
 main .product .section1 .product-info .addition-description .share-product a {
   color: var(--black);
 }
+
 main .product .section1 .product-info .addition-description .share-product a i {
   font-size: 12px;
   padding: 10px;
@@ -508,15 +518,18 @@ main .related-books {
   max-width: 25%;
   height: 100%;
 }
+
 main .related-books .heading {
   font-weight: 700;
   font-size: 18px;
   color: var(--black);
   padding-bottom: 10px;
 }
+
 main .related-books a {
   text-decoration: none;
 }
+
 main .related-books .book {
   display: flex;
   flex-direction: row;
@@ -526,13 +539,16 @@ main .related-books .book {
   height: 17vh;
   gap: 10px;
 }
+
 main .related-books .book:hover {
   transform: scale(1.05);
 }
+
 main .related-books .book .book-img {
   position: relative;
   width: 30%;
 }
+
 main .related-books .book .book-img img {
   position: absolute;
   width: 100%;
@@ -544,14 +560,17 @@ main .related-books .book .book-img img {
 main .related-books .book .book-info {
   flex: 1.5;
 }
+
 main .related-books .book .book-info .book-name {
   font-weight: 600;
   font-size: 14px;
   color: var(--black);
 }
+
 main .related-books .book .book-info .book-cost {
   color: var(--color2);
 }
+
 main .related-books .book:hover .book-info .book-name {
   text-decoration: underline;
 }
@@ -564,6 +583,7 @@ main .product .comment-section {
   width: 100%;
   justify-content: center;
 }
+
 main .product .comment-section .heading {
   display: flex;
   flex-direction: row;
@@ -573,10 +593,12 @@ main .product .comment-section .heading {
   align-items: center;
   border-bottom: 1px solid #bbbbbb;
 }
+
 main .product .comment-section .heading .rates {
   font-size: 13px;
   color: var(--color6);
 }
+
 main .product .comment-section .heading .vote {
   font-size: 11px;
   color: var(--color8);
@@ -603,49 +625,117 @@ main .product .comment-section .review-box .reviewer-img {
   border-radius: 50%;
   overflow: hidden;
 }
+
 main .product .comment-section .review-box .reviewer-img img {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 main .product .comment-section .review-box .review-main {
   flex: 1;
   display: block;
 }
-main
-  .product
-  .comment-section
-  .review-box
-  .review-main
-  .heading-review
-  .sub-heading {
+
+main .product .comment-section .review-box .review-main .heading-review .sub-heading {
   display: flex;
   gap: 10px;
   font-weight: 550;
   font-size: 15px;
 }
-main
-  .product
-  .comment-section
-  .review-box
-  .review-main
-  .heading-review
-  .sub-heading
-  .rate {
+
+main .product .comment-section .review-box .review-main .heading-review .sub-heading .rate {
   color: var(--color6);
 }
-main
-  .product
-  .comment-section
-  .review-box
-  .review-main
-  .heading-review
-  .review-time {
+
+main .product .comment-section .review-box .review-main .heading-review .review-time {
   font-size: 13px;
   color: var(--color8);
 }
+
 main .product .comment-section .review-box .review-main .review-content {
   text-align: justify;
   font-size: 14px;
+}
+
+.review-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-form h4 {
+  margin-bottom: 15px;
+  color: var(--black);
+}
+
+.rating-select {
+  margin-bottom: 15px;
+}
+
+.rating-select .rate-title {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color8);
+}
+
+.rating-select .stars {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.rating-select .stars input {
+  display: none;
+}
+
+.rating-select .stars label {
+  cursor: pointer;
+  padding: 5px;
+  color: #ddd;
+}
+
+.rating-select .stars label i {
+  font-size: 24px;
+}
+
+.rating-select .stars input:checked~label {
+  color: var(--color6);
+}
+
+.rating-select .stars label:hover,
+.rating-select .stars label:hover~label {
+  color: var(--color6);
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-family: inherit;
+}
+
+.submit-review {
+  background: var(--color1);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.submit-review:hover {
+  background: var(--color2);
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JBOOK Admin - {% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'app/css/admin.css' %}">
+    {% block extra_css %}{% endblock %}>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="{% url 'admin_dashboard' %}" class="logo">JBOOK</a>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li {% if request.resolver_match.url_name == 'admin_dashboard' %}class="active"{% endif %}>
+                    <a href="{% url 'admin_dashboard' %}">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'admin_products' %}class="active"{% endif %}>
+                    <a href="{% url 'admin_products' %}">
+                        <i class="ri-shopping-bag-line"></i>
+                        <span>Product Management</span>
+                    </a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'admin_orders' %}class="active"{% endif %}>
+                    <a href="{% url 'admin_orders' %}">
+                        <i class="ri-file-list-line"></i>
+                        <span>Order Management</span>
+                    </a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'admin_customers' %}class="active"{% endif %}>
+                    <a href="{% url 'admin_customers' %}">
+                        <i class="ri-user-line"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+                <li {% if request.resolver_match.url_name == 'admin_reviews' %}class="active"{% endif %}>
+                    <a href="{% url 'admin_reviews' %}">
+                        <i class="ri-star-line"></i>
+                        <span>Review Management</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <button type="button" id="sidebarCollapse" class="btn">
+                            <i class="ri-menu-line"></i>
+                        </button>
+                        <h5 class="mb-0 ms-3">{% block page_title %}{% endblock %}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="{% url 'home' %}" class="btn btn-outline-primary me-2">
+                            <i class="ri-store-line"></i> View Store
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger">
+                            <i class="ri-logout-box-line"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="container-fluid py-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'app/js/admin.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
